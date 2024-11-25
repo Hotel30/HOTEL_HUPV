@@ -1,0 +1,60 @@
+.main-content{
+}
+
+.top-charts {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.chart-container {
+  background: #202020;
+  padding: 20px;
+  border-radius: 10px;
+  width: 48%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chart-container h2 {
+  color: #FFF;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+
+.circular-charts {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.hotel-chart {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.hotel-chart h3 {
+  color: #FFF;
+  margin-bottom: 10px;
+}
+
+
+.manage-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  background-color: #FFE605;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  transform: translateY(-20px);
+}
+
+.manage-button:hover {
+  background-color: #FFD700;
+}
