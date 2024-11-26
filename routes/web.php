@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/reportePersonal', [PersonalController::class, 'filtrar'])->name('pedro')->middleware('setCurrentSection:personal');
     Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');
+    //
 });
 
 require __DIR__.'/auth.php';
