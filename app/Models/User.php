@@ -3,22 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable; // Para autenticación
+use Illuminate\Foundation\Auth\User as Authenticatable; 
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
     /**
-     * La tabla asociada al modelo.
+     * 
      *
      * @var string
      */
     protected $table = 'users';
 
     /**
-     * Los atributos que son asignables.
+     * 
      *
      * @var array
      */
@@ -42,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Los atributos que deben ser ocultos para arrays.
+     * 
      *
      * @var array
      */
@@ -52,32 +53,32 @@ class User extends Authenticatable
     ];
 
     /**
-     * Los atributos que deben ser convertidos a tipos nativos.
+     * 
      *
      * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'hora_entrada' => 'time',
-        'hora_salida' => 'time',
+       'hora_entrada' => 'datetime:H:i', 
+        'hora_salida' => 'datetime:H:i',   
         'fecha_ingreso' => 'date',
         'estado' => 'boolean',
     ];
 
     /**
-     * Relación con el modelo Hotel.
      * 
-     * Un usuario pertenece a un hotel.
+     * 
+     * Un usuario pertenece a un hotel
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function hotel()
     {
-        return $this->belongsTo(Hotel::class, 'id_hotel');
+        return $this->belongsTo(Hoteles::class, 'id_hotel');
     }
 
     /**
-     * Establecer el password encriptado.
+     * 
      *
      * @param string $value
      * @return void

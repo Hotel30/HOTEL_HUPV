@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ClienteSeeder::class,
             InventarioSeeder::class,
             ProveedoresSeeder::class,
+            UsersTableSeeder::class,
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
