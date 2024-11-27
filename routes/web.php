@@ -8,6 +8,19 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PromocionesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\HabitacionController;
+
+Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
+    Route::get('/', [HabitacionController::class, 'index'])->name('index');
+    Route::get('create', [HabitacionController::class, 'create'])->name('create');  
+    Route::post('store', [HabitacionController::class, 'store'])->name('store'); 
+    Route::get('edit/{id}', [HabitacionController::class, 'edit'])->name('edit'); 
+    Route::put('update/{id}', [HabitacionController::class, 'update'])->name('update');  
+    Route::delete('destroy/{id}', [HabitacionController::class, 'destroy'])->name('destroy'); 
+});
+
+Route::get('/ocupacion', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
+
 
 Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function() {
     // rutas para los clientes rol 1
@@ -66,7 +79,6 @@ Route::middleware(['auth'])->group(function () {
 
     
 
-    Route::get('/ocupacion', [OcupacionController::class, 'index']);
 
     Route::get('/estadisticas', function () {
         return view('Modulo_Reservaciones.Estadisticas');

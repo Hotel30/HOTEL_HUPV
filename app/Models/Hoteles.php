@@ -14,7 +14,7 @@ class Hoteles extends Model
     
     public function habitaciones()
     {
-        return $this->hasMany(Habitacion::class, 'hotel_id', 'id');
+        return $this->hasMany(Habitacion::class, 'hotel_id','id');
     }
      
      public function inventarios()
