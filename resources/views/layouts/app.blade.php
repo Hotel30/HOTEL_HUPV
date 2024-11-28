@@ -23,10 +23,13 @@
                     <span>Clientes</span>
                 </div>
             </a>
+            <a href="{{ route('habitaciones.index') }}">
             <div class="menu-item {{ $currentSection == 'habitaciones' ? 'active' : '' }}">
                 <img src="{{ asset('img/habitaciones.svg') }}" alt="Habitaciones" class="habitaciones-image">
                 <span>Habitaciones</span>
             </div>
+            </a>
+            
             <a href="{{ route('personal.index') }}">
                 <div class="menu-item {{ $currentSection == 'personal' ? 'active' : '' }}">
                     <img src="{{ asset('img/personal.svg') }}" alt="Personal" class="personal-image">

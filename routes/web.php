@@ -7,17 +7,56 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PromocionesController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\HabitacionController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
+    Route::get('/', [HabitacionController::class, 'index'])->name('index');
+    Route::get('create', [HabitacionController::class, 'create'])->name('create');  
+    Route::post('store', [HabitacionController::class, 'store'])->name('store'); 
+    Route::get('edit/{id}', [HabitacionController::class, 'edit'])->name('edit'); 
+    Route::put('update/{id}', [HabitacionController::class, 'update'])->name('update');  
+    Route::delete('destroy/{id}', [HabitacionController::class, 'destroy'])->name('destroy'); 
+});
+
+Route::get('/ocupacion', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
+
+
+Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function() {
+    // rutas para los clientes rol 1
+    Route::get('/', [UsersController::class, 'indexClientes'])->name('index'); 
+    Route::get('create', [UsersController::class, 'createCliente'])->name('create');  
+    Route::post('store', [UsersController::class, 'storeCliente'])->name('store'); 
+    Route::get('edit/{id}', [UsersController::class, 'editCliente'])->name('edit'); 
+    Route::put('update/{id}', [UsersController::class, 'updateCliente'])->name('update');  
+    Route::delete('destroy/{id}', [UsersController::class, 'destroyCliente'])->name('destroy');  
+    Route::get('clientes/tabla', [UsersController::class, 'tablaClientes'])->name('tabla');
+});
+
+Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:personal')->group(function() {
+    // rutas para los trabajadores y administradores roles 2 y 3
+    Route::get('/', [UsersController::class, 'indexPersonal'])->name('index');  
+    Route::get('create', [UsersController::class, 'createPersonal'])->name('create');  
+    Route::post('store', [UsersController::class, 'storePersonal'])->name('store');  
+    Route::get('edit/{id}', [UsersController::class, 'editPersonal'])->name('edit');  
+    Route::put('update/{id}', [UsersController::class, 'updatePersonal'])->name('update');  
+    Route::delete('destroy/{id}', [UsersController::class, 'destroyPersonal'])->name('destroy');  
+    Route::get('personal/tabla', [UsersController::class, 'tablaPersonal'])->name('tabla');
+});
+
+Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:inventario')->group(function () {
+    Route::get('/', [InventarioController::class, 'index'])->name('index');
+    Route::get('create', [InventarioController::class, 'create'])->name('create');
+    Route::post('/', [InventarioController::class, 'store'])->name('store');
+    Route::get('{inventario}', [InventarioController::class, 'show'])->name('show');
+    Route::get('{inventario}/edit', [InventarioController::class, 'edit'])->name('edit');
+    Route::put('{inventario}', [InventarioController::class, 'update'])->name('update');
+    Route::delete('{inventario}', [InventarioController::class, 'destroy'])->name('destroy');
+});
+
+Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');
+Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware('setCurrentSection:inventario');
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -38,37 +77,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
     });
 
-    Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:personal')->group(function () {
-        Route::get('/', [PersonalController::class, 'index'])->name('index'); 
-        Route::get('create', [PersonalController::class, 'create'])->name('create'); 
-        Route::post('/', [PersonalController::class, 'store'])->name('store'); 
-        Route::get('{personal}', [PersonalController::class, 'show'])->name('show'); 
-        Route::get('{personal}/edit', [PersonalController::class, 'edit'])->name('edit'); 
-        Route::put('{personal}', [PersonalController::class, 'update'])->name('update'); 
-        Route::delete('{personal}', [PersonalController::class, 'destroy'])->name('destroy'); 
-    });
 
-    Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:inventario')->group(function () {
-        Route::get('/', [InventarioController::class, 'index'])->name('index');
-        Route::get('create', [InventarioController::class, 'create'])->name('create');
-        Route::post('/', [InventarioController::class, 'store'])->name('store');
-        Route::get('{inventario}', [InventarioController::class, 'show'])->name('show');
-        Route::get('{inventario}/edit', [InventarioController::class, 'edit'])->name('edit');
-        Route::put('{inventario}', [InventarioController::class, 'update'])->name('update');
-        Route::delete('{inventario}', [InventarioController::class, 'destroy'])->name('destroy');
-    });
+    
 
-    Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function () {
-        Route::get('/', [ClienteController::class, 'index'])->name('index');  
-        Route::get('/crear', [ClienteController::class, 'create'])->name('create');  
-        Route::post('/', [ClienteController::class, 'store'])->name('store'); 
-        Route::get('/{cliente}', [ClienteController::class, 'show'])->name('show');  
-        Route::get('/{cliente}/editar', [ClienteController::class, 'edit'])->name('edit');  
-        Route::put('/{cliente}', [ClienteController::class, 'update'])->name('update');  
-        Route::delete('/{cliente}', [ClienteController::class, 'destroy'])->name('destroy');  
-    });
-
-    Route::get('/ocupacion', [OcupacionController::class, 'index']);
 
     Route::get('/estadisticas', function () {
         return view('Modulo_Reservaciones.Estadisticas');
@@ -86,11 +97,10 @@ Route::middleware(['auth'])->group(function () {
         return view('Modulo_Facturas.Listar');
     })->name('listar')->middleware('setCurrentSection:facturacion');
 
-    Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');
-    Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware('setCurrentSection:inventario');
-
+   
     Route::get('/reportePersonal', [PersonalController::class, 'filtrar'])->name('pedro')->middleware('setCurrentSection:personal');
     Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');
+    //
 });
 
 Route::get('/index', function () {

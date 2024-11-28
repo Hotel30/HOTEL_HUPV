@@ -15,15 +15,17 @@ class Habitaciones extends Migration
     {
         Schema::create('habitaciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_id')->constrained('hoteles');
-            $table->string('tipo_habitacion'); 
-            $table->integer('numero_habitacion');
+            $table->unsignedBigInteger('hotel_id');
+            $table->unsignedBigInteger('tipo_habitacion_id');
+            $table->string('numero_habitacion', 10);
             $table->decimal('tarifa', 8, 2);
-            $table->boolean('estado')->default(1); 
-            $table->integer('capacidad')->default(1); 
+            $table->enum('estado', ['disponible', 'ocupada', 'mantenimiento']);
+            $table->enum('piso', ['1', '2', '3']); // Nuevo campo agregado
             $table->timestamps();
+
+            $table->foreign('hotel_id')->references('id')->on('hoteles')->onDelete('cascade');
+            $table->foreign('tipo_habitacion_id')->references('id')->on('tipos_habitacion')->onDelete('cascade');
         });
-        
     }
 
     /**

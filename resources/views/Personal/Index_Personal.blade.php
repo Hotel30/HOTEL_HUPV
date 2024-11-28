@@ -5,99 +5,57 @@
 @endsection
 
 @section('main.content')
-<div class="main-content">
-    <main class="table" id="personal_table">
-        <section class="table__header">
-            <h1>Lista de Personal</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Buscar...">
+    <div class="main-content">
+        <h2>Usuarios</h2>
+        <div class="top-bar">
+                <a href="{{ route('personal.create') }}" class="edit-button">Añadir Cliente</a>
             </div>
-            <div class="top-bar">
-                <a href="{{ route('personal.create') }}" class="edit-button">Añadir Personal</a>
-            </div>
-
-            <div class="top-bar">
-                <a href="{{ route('pedro') }}" class="delete-button">Generar Reporte</a>
-            </div>
-            
-        </section>
-        <section class="table__body">
-            <table>
-                <thead>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Puesto</th>
+                    <th>Turno</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Hora Entrada</th>
+                    <th>Hora Salida</th>
+                    <th>Área Asignada</th>
+                    <th>Tarea Asignada</th>
+                    <th>Hotel</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($trabajadores as $trabajador)
                     <tr>
-                        <th>Nombre <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Puesto <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Turno <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Fecha Ingreso <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Tarea Asignada <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Hora Entrada <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Hora Salida <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Acceso <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Área Asignada <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Estado <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Email <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Teléfono <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Hotel <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Rol <span class="icon-arrow">&UpArrow;</span></th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($personal as $persona)
-                    <tr>
-                        <td>{{ $persona->nombre }}</td>
-                        <td>{{ $persona->puesto }}</td>
-                        <td>{{ $persona->turno }}</td>
-                        <td>{{ $persona->fecha_ingreso }}</td>
-                        <td>{{ $persona->tarea_asignada }}</td>
-                        <td>{{ $persona->hora_entrada }}</td>
-                        <td>{{ $persona->hora_salida }}</td>
-                        <td>{{ $persona->acceso }}</td>
-                        <td>{{ $persona->area_asignada }}</td>
-                        <td>{{ $persona->estado }}</td>
-                        <td>{{ $persona->email }}</td>
-                        <td>{{ $persona->telefono }}</td>
-                        <td>{{ $persona->hotel->nombre }}</td>
+                        <td>{{ $trabajador->nombre }}</td>
+                        <td>{{ $trabajador->apellidos }}</td>
+                        <td>{{ $trabajador->email }}</td>
+                        <td>{{ $trabajador->puesto }}</td>
+                        <td>{{ $trabajador->turno }}</td>
+                        <td>{{ $trabajador->fecha_ingreso }}</td>
+                        <td>{{ $trabajador->telefono }}</td>
+                        <td>{{ $trabajador->direccion }}</td>
+                        <td>{{ $trabajador->hora_entrada->format('H:i') }}</td>  
+                        <td>{{ $trabajador->hora_salida->format('H:i') }}</td>   
+                        <td>{{ $trabajador->area_asignada }}</td>
+                        <td>{{ $trabajador->tarea_asignada }}</td>
+                        <td>{{ $trabajador->hotel->nombre ?? 'No asignado' }}</td> 
                         <td>
-                            @switch($persona->id_rol)
-                                @case(1)
-                                    Cliente
-                                    @break
-                                @case(2)
-                                    Trabajador General
-                                    @break
-                                @case(3)
-                                    Admin del Sistema
-                                    @break
-                                @default
-                                    Desconocido
-                            @endswitch
-                        </td>
-                        <td>
-                            <div class="action-buttons">
-                                <a href="{{ route('personal.edit', $persona->id_personal) }}" class="edit-button">Editar</a>
-                                <form action="{{ route('personal.destroy', $persona->id_personal) }}" method="POST" class="delete-form">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="delete-button">Borrar</button>
-                                </form>
-                            </div>
+                            <a href="{{ route('personal.edit', $trabajador->id) }}" class="btn-edit">Editar</a>
+                            <form action="{{ route('personal.destroy', $trabajador->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </section>
-    </main>
-</div>
-@endsection
-
-@section('sidebar.content')
-<ul>
-    <li class="sidebar-content"><a href="#">Estadísticas</a></li>
-    <li class="sidebar-content"><a href="#">Mapeo</a></li>
-    <li class="sidebar-content"><a href="#">Clientes</a></li>
-    <li class="sidebar-content"><a href="#">Ocupación</a></li>
-    <li class="sidebar-content"><a href="#">Reportes</a></li>
-</ul>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection

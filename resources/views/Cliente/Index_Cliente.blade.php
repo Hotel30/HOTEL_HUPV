@@ -3,10 +3,9 @@
 @section('head.content')
 <link rel="stylesheet" href="{{ asset('css/listado.css') }}">
 @endsection
-
 @section('main.content')
 <div class="main-content">
-<main class="table" id="customers_table">
+    <main class="table" id="customers_table"> 
         <section class="table__header">
             <h1>Clientes</h1>
             <div class="input-group">
@@ -23,8 +22,8 @@
                         <th> Nombre <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Apellidos <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Email <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Telefono <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Direccion <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Teléfono <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Dirección <span class="icon-arrow">&UpArrow;</span></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -38,9 +37,8 @@
                         <td>{{ $cliente->direccion }}</td>
                         <td>
                             <div class="action-buttons">
-                                    <a href="{{ route('clientes.edit', $cliente->id) }}" class="edit-button">Editar</a>
-
-                                    <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="delete-form">
+                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="edit-button">Editar</a>
+                                <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="delete-button">Borrar</button>
