@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.hero {
+    background-image: url('../img/hotel1.jpg');
+    background-size: cover;
+    color: rgb(18, 17, 17);
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h1 {
+    font-size: 2rem;
+}
+
+.hero p {
+    font-size: 1rem;
+}
+
+.btn {
+    background-color: #673ab7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.hotels {
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.hotel-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+}
+
+.hotel-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.hotel-card h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.rating {
+    color: #388e3c;
+    font-weight: bold;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.total {
+    font-size: 0.9rem;
+    color: #555;
+}

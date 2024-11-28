@@ -23,6 +23,7 @@ Route::get('/', function () {
     return view('auth.login');
  });
 
+
 Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
@@ -92,4 +93,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');
 });
 
+Route::get('/index', function () {
+    return view('Public_Views.index');
+});
+
+Route::get('/offers', function () {
+    return view('Public_Views.ofertas');
+});
+
+Route::get('/contact', function () {
+    return view('Public_Views.contacto');
+});
+
+Route::get('/habitacion', function () {
+    return view('Public_Views.habitacion');
+});
+
+Route::get('/hotel', function () {
+    return view('Public_Views.hotel');
+});
 require __DIR__.'/auth.php';
