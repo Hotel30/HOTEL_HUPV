@@ -77,10 +77,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
     });
 
-
-    
-
-
     Route::get('/estadisticas', function () {
         return view('Modulo_Reservaciones.Estadisticas');
     })->middleware('setCurrentSection:reservaciones');
@@ -100,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
    
     Route::get('/reportePersonal', [PersonalController::class, 'filtrar'])->name('pedro')->middleware('setCurrentSection:personal');
     Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');
-    //
+
 });
 
 Route::get('/index', function () {
@@ -122,4 +118,5 @@ Route::get('/habitacion', function () {
 Route::get('/hotel', function () {
     return view('Public_Views.hotel');
 });
+
 require __DIR__.'/auth.php';

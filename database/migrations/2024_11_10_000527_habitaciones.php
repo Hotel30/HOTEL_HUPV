@@ -24,7 +24,7 @@ class Habitaciones extends Migration
             $table->timestamps();
 
             $table->foreign('hotel_id')->references('id')->on('hoteles')->onDelete('cascade');
-            $table->foreign('tipo_habitacion_id')->references('id')->on('tipos_habitacion')->onDelete('cascade');
+            //$table->foreign('tipo_habitacion_id')->references('id')->on('tipos_habitacion')->onDelete('cascade');
         });
     }
 

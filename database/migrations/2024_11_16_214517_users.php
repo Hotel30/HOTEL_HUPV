@@ -38,7 +38,7 @@ class Users extends Migration
             $table->timestamps();
 
             // Relaciones
-            $table->foreign('id_hotel')->references('id')->on('hotels')->onDelete('set null');
+            $table->foreign('id_hotel')->references('id')->on('hoteles')->onDelete('set null');
         });
     }
 

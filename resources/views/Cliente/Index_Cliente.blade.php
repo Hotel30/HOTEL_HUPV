@@ -3,6 +3,7 @@
 @section('head.content')
 <link rel="stylesheet" href="{{ asset('css/listado.css') }}">
 @endsection
+
 @section('main.content')
 <div class="main-content">
     <main class="table" id="customers_table"> 
