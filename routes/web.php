@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OcupacionController;
 use App\Http\Controllers\ClienteController;
@@ -18,10 +17,7 @@ Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSect
     Route::put('update/{id}', [HabitacionController::class, 'update'])->name('update');  
     Route::delete('destroy/{id}', [HabitacionController::class, 'destroy'])->name('destroy'); 
 });
-
 Route::get('/ocupacion', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
-
-
 Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function() {
     // rutas para los clientes rol 1
     Route::get('/', [UsersController::class, 'indexClientes'])->name('index'); 
@@ -32,7 +28,6 @@ Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clie
     Route::delete('destroy/{id}', [UsersController::class, 'destroyCliente'])->name('destroy');  
     Route::get('clientes/tabla', [UsersController::class, 'tablaClientes'])->name('tabla');
 });
-
 Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:personal')->group(function() {
     // rutas para los trabajadores y administradores roles 2 y 3
     Route::get('/', [UsersController::class, 'indexPersonal'])->name('index');  
@@ -43,7 +38,6 @@ Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:pers
     Route::delete('destroy/{id}', [UsersController::class, 'destroyPersonal'])->name('destroy');  
     Route::get('personal/tabla', [UsersController::class, 'tablaPersonal'])->name('tabla');
 });
-
 Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:inventario')->group(function () {
     Route::get('/', [InventarioController::class, 'index'])->name('index');
     Route::get('create', [InventarioController::class, 'create'])->name('create');
@@ -53,11 +47,8 @@ Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:
     Route::put('{inventario}', [InventarioController::class, 'update'])->name('update');
     Route::delete('{inventario}', [InventarioController::class, 'destroy'])->name('destroy');
 });
-
 Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');
 Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware('setCurrentSection:inventario');
-
-
 Route::get('/', function () {
     return view('auth.login');
  });
