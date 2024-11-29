@@ -19,6 +19,7 @@
             <div class="top-bar">
                 <a href="{{ route('pedro') }}" class="delete-button">Generar Reporte</a>
             </div>
+            
         </section>
         <section class="table__body">
             <table>

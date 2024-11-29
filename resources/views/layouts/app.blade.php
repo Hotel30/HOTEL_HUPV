@@ -53,14 +53,25 @@
                 </div>
             </a>
         </div>
-        <div class="profile-icons">
-            <img src="{{ asset('img/bell2.png') }}" alt="Notificaciones" class="notificaciones-image">
-            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                @csrf
-                <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                    <img src="{{ asset('img/userIcon.png') }}" alt="User" class="user-image">
-                </button>
-            </form>
+        <div></div>
+        <div class="action">
+            <div class="profile" onclick="menuToggle();">
+                <img src="{{ asset('img/settings_blue.png') }}" />
+            </div>
+            <div class="menu">
+                <ul>
+                <li>
+                    <img src="{{ asset('img/user_blue.png') }}" /><a href="{{ route('habitaciones.index') }}">Mi Perfil</a>
+                </li>
+                <li>
+                    <img src="{{ asset('img/log-out_blue.png') }}" class="logout" />
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+                        @csrf
+                    </form>
+                    <a href="#" class="btn-ref" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                </li>
+                </ul>
+            </div>
         </div>
     </header>
 
@@ -75,6 +86,13 @@
     </div>
 
     @yield('body.content')
+
+    <script>
+      function menuToggle() {
+        const toggleMenu = document.querySelector(".menu");
+        toggleMenu.classList.toggle("active");
+      }
+    </script>
 
 </body>
 </html>
