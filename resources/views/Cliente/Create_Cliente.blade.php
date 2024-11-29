@@ -66,7 +66,20 @@
                 @enderror
             </div>
 
-            <button type="submit" class="manage-button">Registrar</button>
+            <div class="button-group">
+                <a href="{{ route('clientes.index') }}" class="cancel-button">Cancelar</a>
+                <button type="submit" class="cancel-button">Registrar</button>
+            </div>
         </form>
     </div>
+@endsection
+
+@section('sidebar.content')
+<ul>
+    <li class="sidebar-content"><a href="#">Estadísticas</a></li>
+    <li class="sidebar-content"><a href="#">Mapeo</a></li>
+    <li class="sidebar-content"><a href="#">Clientes</a></li>
+    <li class="sidebar-content"><a href="#">Ocupación</a></li>
+    <li class="sidebar-content"><a href="#">Reportes</a></li>
+</ul>
 @endsection

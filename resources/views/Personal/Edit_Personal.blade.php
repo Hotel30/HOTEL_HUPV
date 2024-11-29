@@ -34,7 +34,7 @@
 
             <div class="input-group">
                 <label for="direccion">Dirección:</label>
-                <textarea id="direccion" name="direccion">{{ old('direccion', $trabajador->direccion) }}</textarea>
+                <input type="text" id="direccion" name="direccion" value="{{ old('direccion', $trabajador->direccion) }}">
             </div>
 
             <div class="input-group">
@@ -78,7 +78,7 @@
 
             <div class="input-group">
                 <label for="tarea_asignada">Tarea Asignada:</label>
-                <textarea id="tarea_asignada" name="tarea_asignada">{{ old('tarea_asignada', $trabajador->tarea_asignada) }}</textarea>
+                <input type="text" id="tarea_asignada" name="tarea_asignada" value="{{ old('tarea_asignada', $trabajador->tarea_asignada) }}">
             </div>
 
             <div class="input-group">
@@ -98,7 +98,21 @@
                 </select>
             </div>
 
-            <button type="submit" class="manage-button">Actualizar</button>
+            <div class="button-group">
+                <a href="{{ route('personal.index') }}" class="cancel-button">Cancelar</a>
+                <button type="submit" class="cancel-button">Registrar</button>
+            </div>
+
         </form>
     </div>
+@endsection
+
+@section('sidebar.content')
+<ul>
+    <li class="sidebar-content"><a href="#">Estadísticas</a></li>
+    <li class="sidebar-content"><a href="#">Mapeo</a></li>
+    <li class="sidebar-content"><a href="#">Clientes</a></li>
+    <li class="sidebar-content"><a href="#">Ocupación</a></li>
+    <li class="sidebar-content"><a href="#">Reportes</a></li>
+</ul>
 @endsection
