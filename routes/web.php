@@ -9,6 +9,7 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PromocionesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HabitacionController;
+use App\Http\Controllers\ProfileController;
 
 Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
     Route::get('/', [HabitacionController::class, 'index'])->name('index');
@@ -19,8 +20,7 @@ Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSect
     Route::delete('destroy/{id}', [HabitacionController::class, 'destroy'])->name('destroy'); 
 });
 
-Route::get('/ocupacion', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
-
+Route::get('/', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
 
 Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function() {
     // rutas para los clientes rol 1
@@ -60,17 +60,14 @@ Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->nam
 Route::get('/reportePersonal', [PersonalController::class, 'filtrar'])->name('pedro')->middleware('setCurrentSection:personal');
 Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');
 
-Route::get('/', function () {
-    return view('auth.login');
- });
-
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('setCurrentSection:profile');
 
 Route::middleware(['auth'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
+    Route::get('/dashboard', function () {
+            return redirect()->route('ocupacion.index');
         })->name('dashboard');
 
-        Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
+    Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
         Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
         Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
         Route::post('/', [PromocionesController::class, 'store'])->name('store'); 
@@ -94,9 +91,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/listar', function () {
         return view('Modulo_Facturas.Listar');
     })->name('listar')->middleware('setCurrentSection:facturacion');
-
-   
-   
 
 });
 
