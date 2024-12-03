@@ -66,7 +66,10 @@
                 @enderror
             </div>
 
-            <button type="submit" class="manage-button">Registrar</button>
+            <div class="button-group">
+                <a href="{{ route('clientes.index') }}" class="cancel-button">Cancelar</a>
+                <button type="submit" class="cancel-button">Registrar</button>
+            </div>
         </form>
     </div>
 @endsection

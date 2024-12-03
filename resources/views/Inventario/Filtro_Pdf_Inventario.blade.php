@@ -40,8 +40,10 @@
 
         </div>
     
-        <button type="submit" class="cancel-button">Generar PDF</button>
-    </form>
+        <div class="button-group">
+            <a href="{{ route('inventario.index') }}" class="cancel-button">Cancelar</a>
+            <button type="submit" class="cancel-button">Generar PDF</button>
+        </div>    </form>
     
     <script>
         document.getElementById('filter_hotel').addEventListener('change', function () {

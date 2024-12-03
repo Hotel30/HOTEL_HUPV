@@ -9,6 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 </head>
+
 <body>
     <!-- Barra de Navegación -->
     <header>
@@ -18,10 +19,10 @@
                 HUPV
             </div>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Hoteles</a></li>
-                <li><a href="#informacion">Sobre nosotros</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="{{ route('index') }}">Home</a></li>
+                <li><a href="{{ route('hotel') }}">Hoteles</a></li>
+                <li><a href="#">Sobre nosotros</a></li>
+                <li><a href="{{ route('contacto') }}">Contacto</a></li>
                 <li><a href="#">Login</a></li>
             </ul>
         </nav>
@@ -30,7 +31,7 @@
     <!-- Encabezado Principal -->
     <section class="hero">
         <div class="slider">
-            <div class="slide" style="background-image: url('img/hotel.png');">
+            <div class="slide" style="background-image: url('img/hotel.jpg');">
                 <h1>Experience Luxury Beyond Ordinary</h1>
                 <p>Book your dream stay today!</p>
                 <button>Explore</button>
@@ -107,7 +108,7 @@
 </section>
 <section class="hotels">
     <div class="hotel-card">
-        <img src="img/hotel.png" alt="CHN Hotel Monterrey">
+        <img src="img/hotel.jpg" alt="CHN Hotel Monterrey">
         <h3>CHN Hotel Monterrey Norte, Trademark Collection</h3>
         <p class="rating">7.6 <span>Buena</span> (1,025 opiniones)</p>
         <p class="price">
@@ -264,61 +265,6 @@
             </div>
         </section>
 
-
-        
-        <!-- seccion de busquedas de hoteles-->
-        <div class="search-section">
-            <h2>Más búsquedas populares</h2>
-            <div class="search-container">
-                <div class="scrollable-list">
-                    <ul>
-                        <li><a href="vista_hoteles.html">Hoteles en Monterrey</a></li>
-                        <li><a href="#">Hoteles en Manzanillo</a></li>
-                        <li><a href="#">Hoteles en Puebla</a></li>
-                        <li><a href="#">Hoteles en Nuevo Vallarta</a></li>
-                        <li><a href="#">Hoteles en Veracruz Llave</a></li>
-                        <li><a href="#">Hoteles en Querétaro</a></li>
-                        <li><a href="#">Hoteles en Oaxaca</a></li>
-                        <li><a href="#">Hoteles en Guanajuato</a></li>
-                       
-                    </ul>
-                    <ul>
-                        <li><a href="#">Hoteles en Huatulco</a></li>
-                        <li><a href="#">Hoteles en Playa del Carmen</a></li>
-                        <li><a href="#">Hoteles en Mérida</a></li>
-                        <li><a href="#">Hoteles en Las Vegas</a></li>
-                        <li><a href="#">Hoteles en León</a></li>
-                        <li><a href="#">Hoteles en Puerto Escondido</a></li>
-                        <li><a href="#">Hoteles en Ixtapa</a></li>
-                        <li><a href="#">Hoteles en McAllen</a></li>
-                    </ul>
-
-                    <ul>
-                        <li><a href="vista_hoteles.html">Hoteles en Monterrey</a></li>
-                        <li><a href="#">Hoteles en Manzanillo</a></li>
-                        <li><a href="#">Hoteles en Puebla</a></li>
-                        <li><a href="#">Hoteles en Nuevo Vallarta</a></li>
-                        <li><a href="#">Hoteles en Veracruz Llave</a></li>
-                        <li><a href="#">Hoteles en Querétaro</a></li>
-                        <li><a href="#">Hoteles en Oaxaca</a></li>
-                        <li><a href="#">Hoteles en Guanajuato</a></li>
-                       
-                    </ul>
-                    <ul>
-                        <li><a href="#">Hoteles en Huatulco</a></li>
-                        <li><a href="#">Hoteles en Playa del Carmen</a></li>
-                        <li><a href="#">Hoteles en Mérida</a></li>
-                        <li><a href="#">Hoteles en Las Vegas</a></li>
-                        <li><a href="#">Hoteles en León</a></li>
-                        <li><a href="#">Hoteles en Puerto Escondido</a></li>
-                        <li><a href="#">Hoteles en Ixtapa</a></li>
-                        <li><a href="#">Hoteles en McAllen</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Pie de página -->
 <footer class="footer">
     <div class="footer-top">
@@ -335,13 +281,16 @@
             <input type="text" placeholder="Your Email">
             <button>GO</button>
         </div>
-        <div class="social-icons">
+        <!--<div class="social-icons">
             <a href="#"><i class="fa fa-facebook"></i></a>
             <a href="#"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-google"></i></a>
             <a href="#"><i class="fa fa-linkedin"></i></a>
-        </div>
+        </div>-->
     </div>
+</footer>
+
+    <!--
     <div class="footer-bottom">
         <div class="footer-column">
             <h3>HUPV</h3>
@@ -368,7 +317,7 @@
         <p>&copy; 2015 HUPV. All rights reserved.</p>
     </div>
 </footer>
-
+    -->
 
     <!-- Vincula el script aquí -->
     <script src="{{ asset('/js/script.js') }}"></script>

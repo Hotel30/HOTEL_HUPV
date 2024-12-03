@@ -36,8 +36,10 @@
             <input type="checkbox" id="filter_turno" name="filter_turno">
         </div>
     
-        <button type="submit" class="cancel-button">Generar PDF</button>
-    </form>
+        <div class="button-group">
+            <a href="{{ route('inventario.index') }}" class="cancel-button">Cancelar</a>
+            <button type="submit" class="cancel-button">Generar PDF</button>
+        </div>    </form>
     
     <script>
         document.getElementById('filter_hotel').addEventListener('change', function () {
@@ -49,14 +51,4 @@
         });
     </script>
 </main>
-@endsection
-
-@section('sidebar.content')
-<ul>
-    <li class="sidebar-content"><a href="#">Estadísticas</a></li>
-    <li class="sidebar-content"><a href="#">Mapeo</a></li>
-    <li class="sidebar-content"><a href="#">Clientes</a></li>
-    <li class="sidebar-content"><a href="#">Ocupación</a></li>
-    <li class="sidebar-content"><a href="#">Reportes</a></li>
-</ul>
 @endsection

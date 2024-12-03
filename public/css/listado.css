@@ -182,6 +182,10 @@ thead th.active,tbody td.active {
     padding: 5px; 
 }
 
+#profile{
+    padding-top: 30px;
+}
+
 .edit-button,
 .delete-button {
     padding: 10px 15px;
