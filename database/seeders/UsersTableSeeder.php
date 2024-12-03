@@ -18,7 +18,6 @@ class UsersTableSeeder extends Seeder
         // Datos base
         $hotels = [1, 2, 3];
 
-        // Generar 15 clientes
         for ($i = 1; $i <= 15; $i++) {
             DB::table('users')->insert([
                 'nombre' => "Cliente $i",
@@ -34,7 +33,6 @@ class UsersTableSeeder extends Seeder
             ]);
         }
 
-        // Generar 15 trabajadores
         for ($i = 1; $i <= 15; $i++) {
             $hotel_id = $hotels[array_rand($hotels)];
             DB::table('users')->insert([

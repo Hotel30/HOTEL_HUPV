@@ -48,7 +48,7 @@ class PromocionesController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'tipo' => 'required|in:descuento,2x1,cashback,envío gratis,otro',
+            'tipo' => 'required|in:Descuento,2x1,Cashback,Envío gratis,Otro',
             'fecha_inicio' => 'required|date|before:fecha_fin',
             'fecha_fin' => 'required|date|after:fecha_inicio',
         ]);
