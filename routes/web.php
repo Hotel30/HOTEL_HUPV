@@ -62,20 +62,21 @@ Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])-
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('setCurrentSection:profile');
 
+Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
+    Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
+    Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
+    Route::post('/', [PromocionesController::class, 'store'])->name('store'); 
+    Route::get('/{promocion}/edit', [PromocionesController::class, 'edit'])->name('edit'); 
+    Route::put('/{promocion}', [PromocionesController::class, 'update'])->name('update'); 
+    Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
             return redirect()->route('ocupacion.index');
         })->name('dashboard');
 
-    Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
-        Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
-        Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
-        Route::post('/', [PromocionesController::class, 'store'])->name('store'); 
-        Route::get('/{promocion}/edit', [PromocionesController::class, 'edit'])->name('edit'); 
-        Route::put('/{promocion}', [PromocionesController::class, 'update'])->name('update'); 
-        Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
-    });
-
+    
     Route::get('/estadisticas', function () {
         return view('Modulo_Reservaciones.Estadisticas');
     })->middleware('setCurrentSection:reservaciones');

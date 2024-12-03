@@ -91,13 +91,3 @@
     </main>
 </div>
 @endsection
-
-@section('sidebar.content')
-<ul>
-    <li class="sidebar-content"><a href="#">Estadísticas</a></li>
-    <li class="sidebar-content"><a href="#">Mapeo</a></li>
-    <li class="sidebar-content"><a href="#">Clientes</a></li>
-    <li class="sidebar-content"><a href="{{ route('ocupacion.index') }}">Ocupación</a></li>
-    <li class="sidebar-content"><a href="#">Reportes</a></li>
-</ul>
-@endsection
