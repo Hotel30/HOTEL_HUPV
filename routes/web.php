@@ -58,11 +58,6 @@ Route::get('/', function () {
  });
 
 
-Route::middleware(['auth'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
-
         Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
         Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
         Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
