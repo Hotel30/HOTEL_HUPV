@@ -8,10 +8,12 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo">
-            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo-image">
-            <span>HUPV</span>
-        </div>
+        <a href="{{ route('ocupacion.index') }}">
+            <div class="logo">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo-image">
+                <span>HUPV</span>
+            </div>
+        </a>
         <div class="menu-items">
             <div class="menu-item {{ $currentSection == 'reservaciones' ? 'active' : '' }}">
                 <img src="{{ asset('img/reservaciones.svg') }}" alt="Reservaciones" class="reservaciones-image">
@@ -53,6 +55,7 @@
                 </div>
             </a>
         </div>
+        <a href="{{ route('index') }}" class="header-button">Home</a>
         <div></div>
         <div class="action">
             <div class="profile" onclick="menuToggle();">
@@ -61,7 +64,10 @@
             <div class="menu">
                 <ul>
                 <li>
-                    <img src="{{ asset('img/user_blue.png') }}" /><a href="{{ route('habitaciones.index') }}">Mi Perfil</a>
+                    <img src="{{ asset('img/user_blue.png') }}" />
+                    <a href="{{ route('profile.show') }}">
+                        Mi Perfil
+                    </a>
                 </li>
                 <li>
                     <img src="{{ asset('img/log-out_blue.png') }}" class="logout" />

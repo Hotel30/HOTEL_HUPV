@@ -30,13 +30,13 @@
                         <th>Correo</th>
                         <th>Puesto</th>
                         <th>Turno</th>
-                        <th>Fecha Ingreso</th>
+                        <!--<th>Fecha Ingreso</th>-->
                         <th>Teléfono</th>
-                        <th>Dirección</th>
+                        <!--<th>Dirección</th>-->
                         <th>Hora Entrada</th>
                         <th>Hora Salida</th>
                         <th>Área Asignada</th>
-                        <th>Tarea Asignada</th>
+                        <!--<th>Tarea Asignada</th>-->
                         <th>Hotel</th>
                         <th></th>
                     </tr>
@@ -49,21 +49,23 @@
                             <td>{{ $trabajador->email }}</td>
                             <td>{{ $trabajador->puesto }}</td>
                             <td>{{ $trabajador->turno }}</td>
-                            <td>{{ $trabajador->fecha_ingreso }}</td>
+                            <!--<<td>{{ $trabajador->fecha_ingreso }}</td>-->
                             <td>{{ $trabajador->telefono }}</td>
-                            <td>{{ $trabajador->direccion }}</td>
+                            <!--<td>{{ $trabajador->direccion }}</td>-->
                             <td>{{ $trabajador->hora_entrada->format('H:i') }}</td>  
                             <td>{{ $trabajador->hora_salida->format('H:i') }}</td>   
                             <td>{{ $trabajador->area_asignada }}</td>
-                            <td>{{ $trabajador->tarea_asignada }}</td>
+                            <!--<td>{{ $trabajador->tarea_asignada }}</td>-->
                             <td>{{ $trabajador->hotel->nombre ?? 'No asignado' }}</td> 
                             <td>
-                                <a href="{{ route('personal.edit', $trabajador->id) }}" class="edit-button">Editar</a>
-                                <form action="{{ route('personal.destroy', $trabajador->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="delete-button">Eliminar</button>
-                                </form>
+                                <div class="action-buttons">
+                                    <a href="{{ route('personal.edit', $trabajador->id) }}" class="edit-button">Editar</a>
+                                    <form action="{{ route('personal.destroy', $trabajador->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="delete-button">Eliminar</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -72,14 +74,4 @@
         </section>
     </main>
 </div>
-@endsection
-
-@section('sidebar.content')
-<ul>
-    <li class="sidebar-content"><a href="#">Estadísticas</a></li>
-    <li class="sidebar-content"><a href="#">Mapeo</a></li>
-    <li class="sidebar-content"><a href="#">Clientes</a></li>
-    <li class="sidebar-content"><a href="#">Ocupación</a></li>
-    <li class="sidebar-content"><a href="#">Reportes</a></li>
-</ul>
 @endsection

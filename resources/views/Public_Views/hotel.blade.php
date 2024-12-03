@@ -17,17 +17,15 @@
                 HUPV
             </div>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Hoteles</a></li>
-                <li><a href="#informacion">Sobre nosotros</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="{{ route('index') }}">Home</a></li>
+                <li><a href="{{ route('hotel') }}">Hoteles</a></li>
+                <li><a href="#">Sobre nosotros</a></li>
+                <li><a href="{{ route('contacto') }}">Contacto</a></li>
                 <li><a href="#">Login</a></li>
             </ul>
         </nav>
     </header>
         
-
-
       <!-- Encabezado segundo de fechas -->  
     <section id="booking-form">
         <div class="booking-container">
@@ -75,7 +73,7 @@
     <div class="hotels-section">
         <h1>Hoteles en Monterrey (Nuevo León, México)</h1>
         <div class="hotel-card">
-            <img src="img/hotel.png" alt="Hotel Monterrey Macroplaza" class="hotel-image">
+            <img src="img/hotel.jpg" alt="Hotel Monterrey Macroplaza" class="hotel-image">
             <div class="hotel-info">
                 <div class="popular-tag">Opción popular</div>
                 <h2>Hotel Monterrey Macroplaza</h2>
@@ -109,7 +107,7 @@
         </div>
 
         <div class="hotel-card">
-            <img src="img/hotel.png" alt="Hotel Monterrey Macroplaza" class="hotel-image">
+            <img src="img/hotel.jpg" alt="Hotel Monterrey Macroplaza" class="hotel-image">
             <div class="hotel-info">
                 <div class="popular-tag">Opción popular</div>
                 <h2>Hotel Monterrey Macroplaza</h2>
@@ -143,7 +141,7 @@
         </div>
 
         <div class="hotel-card">
-            <img src="img/hotel.png" alt="Hotel Monterrey Macroplaza" class="hotel-image">
+            <img src="img/hotel.jpg" alt="Hotel Monterrey Macroplaza" class="hotel-image">
             <div class="hotel-info">
                 <div class="popular-tag">Opción popular</div>
                 <h2>Hotel Monterrey Macroplaza</h2>
@@ -196,40 +194,14 @@
             <input type="text" placeholder="Your Email">
             <button>GO</button>
         </div>
-        <div class="social-icons">
+        <!--<div class="social-icons">
             <a href="#"><i class="fa fa-facebook"></i></a>
             <a href="#"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-google"></i></a>
             <a href="#"><i class="fa fa-linkedin"></i></a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="footer-column">
-            <h3>HUPV</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur tincidunt dolor.</p>
-            <p>St Amsterdam Finland, United States of AKY16 8PN</p>
-        </div>
-        <div class="footer-column">
-            <h3>QUICK LINKS</h3>
-            <ul>
-                <li><a href="#">Rooms</a></li>
-                <li><a href="#">Food & Drinks</a></li>
-                <li><a href="#">Beach Venues</a></li>
-                <li><a href="#">Amenities</a></li>
-                <li><a href="#">Noordwijk</a></li>
-                <li><a href="#">Wellness</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>WE ARE GLOBAL</h3>
-            <img src="img/map.jpg" alt="World Map">
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <p>&copy; 2015 HUPV. All rights reserved.</p>
+        </div>-->
     </div>
 </footer>
-
 
     <!-- Vincula el script aquí -->
     <script src="{{ asset('/js/script.js') }}"></script>

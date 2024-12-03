@@ -1,73 +1,136 @@
 @extends('layouts.app')
-@section('content')
+@section('main.content')
 <style>
    
-    .container {
-        width: 100%;
-        max-width: calc(100vw - 250px);
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        padding-top: 20px; 
-        overflow-y: auto; 
-    }
-    .hotel-bloque {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 48%;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    .hotel-bloques {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        width: 100%;
-    }
-    .habitaciones {
-        display: grid;
-        gap: 5px;
-        width: 100%;
-        padding: 5px;
-        box-sizing: border-box;
-        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-        grid-auto-rows: minmax(50px, 1fr);
-    }
-    .habitacion {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        aspect-ratio: 1 / 1;
-        border-radius: 4px;
-        color: #fff;
-        font-weight: bold;
-        font-size: 0.8em;
-        text-align: center;
-    }
-    .habitacion.disponible {
-        background-color: #28a745;
-    }
-    .habitacion.ocupada {
-        background-color: #dc3545;
-    }
-    .habitacion.mantenimiento {
-        background-color: #ffc107;
-    }
+.container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; 
+}
+
+.hotel-bloques {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center all hotel-bloques */
+    gap: 20px;
+    width: 100%;
+}
+
+.hotel-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Default alignment for other hotel-bloques */
+    width: 48%; /* Adjust this width as needed */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.hotel-bloque h2{
+    align-items: center;
+    margin: 0 auto; 
+}
+
+.hotel-bloque:last-child {
+    align-items: center;
+    margin: 0 auto; 
+}
+
+.habitaciones {
+    display: flex; /* Changed to flex for centering */
+    justify-content: center; /* Center the habitaciones */
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 5px;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.habitacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    width: 70px; /* Set a fixed width */
+    height: 70px; /* Set a fixed height */
+}
+
+.habitacion.disponible {
+    background-color: #28a745;
+}
+
+.habitacion.ocupada {
+    background-color: #dc3545;
+}
+
+.habitacion.mantenimiento {
+    background-color: #ffc107;
+}
+
+.input-group {
+    margin-left: 50vh;
+    font-size: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.input-group input[type="checkbox"] {
+    margin-left: 20px; 
+    transform: scale(1.5); 
+    cursor: pointer; 
+    width: 25px; 
+    height: 25px; 
+}
+
+.input-group input[type="checkbox"]:checked {
+    accent-color: rgb(98, 0, 255);
+}
+
+.input-group label {
+    font-weight: bold;
+    color: aliceblue;
+    margin-right: 10px; 
+}
+
+.input-group select {
+    width: auto; 
+    flex-grow: 1; 
+    padding: 8px; 
+    border: 2px solid slateblue;
+    border-radius: 5px;
+    font-size: 1em;
+    color: black;
+    background-color: aliceblue;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: rgb(98, 0, 255);
+    outline: none;
+    box-shadow: 0 0 8px rgba(39, 1, 143, 0.4);
+}
+
 </style>
 @section('main.content')
     <div class="container">
         <br></br>
         <h1>Mapa de Ocupación de Habitaciones</h1>
-        <div style="width: 100%; display: flex; justify-content: flex-end; margin-bottom: 20px;">
+        <div style="width: 60%; display: flex; justify-content: flex-end; margin-bottom: 20px;" class="input-group">
             <form method="GET" action="{{ route('ocupacion.index') }}">
                 <label for="piso">Piso:</label>
-                <select name="piso" id="piso" onchange="this.form.submit()">
+                <select name="piso" id="piso" onchange="this.form.submit()">    
                     <option value="" {{ request('piso') == '' ? 'selected' : '' }}>Todos</option>
                     <option value="1" {{ request('piso') == '1' ? 'selected' : '' }}>1</option>
                     <option value="2" {{ request('piso') == '2' ? 'selected' : '' }}>2</option>

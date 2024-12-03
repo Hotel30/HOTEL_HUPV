@@ -8,6 +8,8 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PromocionesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HabitacionController;
+use App\Http\Controllers\ProfileController;
+use FontLib\Table\Type\name;
 
 Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
     Route::get('/', [HabitacionController::class, 'index'])->name('index');
@@ -17,7 +19,9 @@ Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSect
     Route::put('update/{id}', [HabitacionController::class, 'update'])->name('update');  
     Route::delete('destroy/{id}', [HabitacionController::class, 'destroy'])->name('destroy'); 
 });
-Route::get('/ocupacion', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
+
+Route::get('/', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
+
 Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function() {
     // rutas para los clientes rol 1
     Route::get('/', [UsersController::class, 'indexClientes'])->name('index'); 
@@ -53,20 +57,23 @@ Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->nam
 Route::get('/reportePersonal', [PersonalController::class, 'filtrar'])->name('pedro')->middleware('setCurrentSection:personal');
 Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');
 
-Route::get('/', function () {
-    return view('auth.login');
- });
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('setCurrentSection:profile');
 
+Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
+    Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
+    Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
+    Route::post('/', [PromocionesController::class, 'store'])->name('store'); 
+    Route::get('/{promocion}/edit', [PromocionesController::class, 'edit'])->name('edit'); 
+    Route::put('/{promocion}', [PromocionesController::class, 'update'])->name('update'); 
+    Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
+});
 
-        Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
-        Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
-        Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
-        Route::post('/', [PromocionesController::class, 'store'])->name('store'); 
-        Route::get('/{promocion}/edit', [PromocionesController::class, 'edit'])->name('edit'); 
-        Route::put('/{promocion}', [PromocionesController::class, 'update'])->name('update'); 
-        Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
-    });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+            return redirect()->route('ocupacion.index');
+        })->name('dashboard');
 
+    
     Route::get('/estadisticas', function () {
         return view('Modulo_Reservaciones.Estadisticas');
     })->middleware('setCurrentSection:reservaciones');
@@ -83,14 +90,11 @@ Route::get('/', function () {
         return view('Modulo_Facturas.Listar');
     })->name('listar')->middleware('setCurrentSection:facturacion');
 
-   
-   
-
 });
 
 Route::get('/index', function () {
     return view('Public_Views.index');
-});
+})->name('index');
 
 Route::get('/offers', function () {
     return view('Public_Views.ofertas');
@@ -98,7 +102,7 @@ Route::get('/offers', function () {
 
 Route::get('/contact', function () {
     return view('Public_Views.contacto');
-});
+})->name('contacto');
 
 Route::get('/habitacion', function () {
     return view('Public_Views.habitacion');
@@ -106,6 +110,6 @@ Route::get('/habitacion', function () {
 
 Route::get('/hotel', function () {
     return view('Public_Views.hotel');
-});
+})->name('hotel');
 
 require __DIR__.'/auth.php';
