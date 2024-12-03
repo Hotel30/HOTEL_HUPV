@@ -10,6 +10,7 @@ use App\Http\Controllers\PromocionesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\ProfileController;
+use FontLib\Table\Type\name;
 
 Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
     Route::get('/', [HabitacionController::class, 'index'])->name('index');
@@ -97,7 +98,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/index', function () {
     return view('Public_Views.index');
-});
+})->name('index');
 
 Route::get('/offers', function () {
     return view('Public_Views.ofertas');
@@ -105,7 +106,7 @@ Route::get('/offers', function () {
 
 Route::get('/contact', function () {
     return view('Public_Views.contacto');
-});
+})->name('contacto');
 
 Route::get('/habitacion', function () {
     return view('Public_Views.habitacion');
@@ -113,6 +114,6 @@ Route::get('/habitacion', function () {
 
 Route::get('/hotel', function () {
     return view('Public_Views.hotel');
-});
+})->name('hotel');
 
 require __DIR__.'/auth.php';

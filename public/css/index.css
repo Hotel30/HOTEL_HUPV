@@ -451,6 +451,9 @@ button:hover {
     justify-content: space-around;
     align-items: center;
     padding: 15px 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .footer-top .contact-info p,
@@ -458,6 +461,12 @@ button:hover {
     font-size: 14px;
     margin: 0;
     color: white;
+}
+
+.footer-top .contact-info,
+.footer-top .newsletter,
+.footer-top .social-icons {
+    margin-right: 40px; /* Add some spacing between items */
 }
 
 .footer-top input {
