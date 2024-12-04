@@ -14,6 +14,7 @@ class Inventario extends Migration
             $table->unsignedBigInteger('proveedor_id');
             $table->string('nombre_producto', 100);
             $table->integer('cantidad');
+            $table->double('precio');
             $table->text('descripcion')->nullable();
             $table->foreign('hotel_id')->references('id')->on('hoteles')->onDelete('cascade');
             $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('cascade');

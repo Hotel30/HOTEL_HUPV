@@ -15,6 +15,7 @@ class Inventario extends Model
         'proveedor_id',
         'nombre_producto',
         'cantidad',
+        'precio',
         'descripcion',
     ];
 

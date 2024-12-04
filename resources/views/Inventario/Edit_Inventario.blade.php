@@ -45,6 +45,11 @@
         </div>
 
         <div class="input-group">
+            <label for="precio">Precio</label>
+            <input type="number" step="0.01" min="0" id="precio" name="precio" value="{{ $inventario->precio }}" required>
+        </div>
+
+        <div class="input-group">
             <label for="descripcion">Descripción</label>
             <input type="text" id="descripcion" name="descripcion" value="{{ $inventario->descripcion }}" required>
         </div>

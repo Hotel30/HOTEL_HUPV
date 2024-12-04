@@ -20,13 +20,13 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Hotel</th>
-                        <th>Tipo</th>
-                        <th>Número</th>
-                        <th>Tarifa</th>
-                        <th>Estado</th>
-                        <th>Piso</th>
+                        <th>ID <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Hotel <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Tipo <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Número <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Tarifa <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Estado <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Piso <span class="icon-arrow">&UpArrow;</span></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -76,12 +76,14 @@
                             <td>{{ ucfirst($habitacion->estado) }}</td>
                             <td>{{ $habitacion->piso }}</td>
                             <td>
-                                <a href="{{ route('habitaciones.edit', $habitacion->id) }}" class="edit-button">Editar</a>
-                                <form action="{{ route('habitaciones.destroy', $habitacion->id) }}" method="POST" style="display: inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="delete-button">Eliminar</button>
-                                </form>
+                                <div class="action-buttons">
+                                    <a href="{{ route('habitaciones.edit', $habitacion->id) }}" class="edit-button">Editar</a>
+                                    <form action="{{ route('habitaciones.destroy', $habitacion->id) }}" method="POST" style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="delete-button">Borrar</button>
+                                    </form>
+                                </div>                               
                             </td>
                         </tr>
                     @endforeach

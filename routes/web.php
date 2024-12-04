@@ -53,6 +53,8 @@ Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:
     Route::get('{inventario}/edit', [InventarioController::class, 'edit'])->name('edit');
     Route::put('{inventario}', [InventarioController::class, 'update'])->name('update');
     Route::delete('{inventario}', [InventarioController::class, 'destroy'])->name('destroy');
+    Route::post('/decrement/{id}', [InventarioController::class, 'decrement'])->name('decrement');
+    Route::get('/restock/{id}', [InventarioController::class, 'generateRestockOrder'])->name('restock');
 });
 
 Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');

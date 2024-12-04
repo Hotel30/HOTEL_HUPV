@@ -23,7 +23,7 @@
                 <li><a href="{{ route('hotel') }}">Hoteles</a></li>
                 <li><a href="#">Sobre nosotros</a></li>
                 <li><a href="{{ route('contacto') }}">Contacto</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="{{ route('login') }}">Login</a></li>
             </ul>
         </nav>
     </header>
