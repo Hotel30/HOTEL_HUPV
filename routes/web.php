@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OcupacionController;
 use App\Http\Controllers\ClienteController;
@@ -11,6 +10,10 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\ProfileController;
 use FontLib\Table\Type\name;
+
+
+Route::get('/estadisticas', [OcupacionController::class, 'estadisticasHabitaciones'])->name('estadisticas.habitaciones')->middleware('setCurrentSection:reservaciones');
+
 
 Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
     Route::get('/', [HabitacionController::class, 'index'])->name('index');
@@ -33,7 +36,6 @@ Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clie
     Route::delete('destroy/{id}', [UsersController::class, 'destroyCliente'])->name('destroy');  
     Route::get('clientes/tabla', [UsersController::class, 'tablaClientes'])->name('tabla');
 });
-
 Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:personal')->group(function() {
     // rutas para los trabajadores y administradores roles 2 y 3
     Route::get('/', [UsersController::class, 'indexPersonal'])->name('index');  
@@ -44,7 +46,6 @@ Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:pers
     Route::delete('destroy/{id}', [UsersController::class, 'destroyPersonal'])->name('destroy');  
     Route::get('personal/tabla', [UsersController::class, 'tablaPersonal'])->name('tabla');
 });
-
 Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:inventario')->group(function () {
     Route::get('/', [InventarioController::class, 'index'])->name('index');
     Route::get('create', [InventarioController::class, 'create'])->name('create');
@@ -56,7 +57,6 @@ Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:
     Route::post('/decrement/{id}', [InventarioController::class, 'decrement'])->name('decrement');
     Route::get('/restock/{id}', [InventarioController::class, 'generateRestockOrder'])->name('restock');
 });
-
 Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');
 Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware('setCurrentSection:inventario');
 
@@ -79,15 +79,8 @@ Route::middleware(['auth'])->group(function () {
             return redirect()->route('ocupacion.index');
         })->name('dashboard');
 
-    
-    Route::get('/estadisticas', function () {
-        return view('Modulo_Reservaciones.Estadisticas');
-    })->middleware('setCurrentSection:reservaciones');
 
-    Route::get('/mapeo', function () {
-        return view('Modulo_Reservaciones.Mapeo');
-    })->middleware('setCurrentSection:reservaciones');
-
+   
     Route::get('/facturacion', function () {
         return view('Modulo_Facturas.Dashboard');
     })->name('facturacion')->middleware('setCurrentSection:facturacion');

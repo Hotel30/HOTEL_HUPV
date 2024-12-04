@@ -21,4 +21,26 @@ class OcupacionController extends Controller
     return view('Ocupacion.index', compact('habitacionesPorHotel', 'pisoSeleccionado'));
 }
 
+public function estadisticasHabitaciones()
+{
+    $estadisticas = Habitacion::select('hotel_id', 'estado')
+        ->get()
+        ->groupBy('hotel_id')
+        ->map(function ($habitaciones) {
+            $total = $habitaciones->count();
+            $ocupadas = $habitaciones->where('estado', 'ocupada')->count();
+
+            return [
+                'total' => $total,
+                'ocupadas' => $ocupadas,
+                'disponibilidad' => $total > 0 ? round((($total - $ocupadas) / $total) * 100, 2) : 0,
+                'ocupacion' => $total > 0 ? round(($ocupadas / $total) * 100, 2) : 0, 
+            ];
+        });
+
+    return view('Modulo_Reservaciones.Estadisticas', ['estadisticas' => $estadisticas]);
+}
+
+
+
 }
