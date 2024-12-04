@@ -11,6 +11,10 @@ use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\ProfileController;
 use FontLib\Table\Type\name;
 
+
+Route::get('/estadisticas', [OcupacionController::class, 'estadisticasHabitaciones'])->name('estadisticas.habitaciones')->middleware('setCurrentSection:reservaciones');
+
+
 Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
     Route::get('/', [HabitacionController::class, 'index'])->name('index');
     Route::get('create', [HabitacionController::class, 'create'])->name('create');  
@@ -73,15 +77,8 @@ Route::middleware(['auth'])->group(function () {
             return redirect()->route('ocupacion.index');
         })->name('dashboard');
 
-    
-    Route::get('/estadisticas', function () {
-        return view('Modulo_Reservaciones.Estadisticas');
-    })->middleware('setCurrentSection:reservaciones');
 
-    Route::get('/mapeo', function () {
-        return view('Modulo_Reservaciones.Mapeo');
-    })->middleware('setCurrentSection:reservaciones');
-
+   
     Route::get('/facturacion', function () {
         return view('Modulo_Facturas.Dashboard');
     })->name('facturacion')->middleware('setCurrentSection:facturacion');

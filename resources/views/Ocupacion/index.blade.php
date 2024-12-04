@@ -141,8 +141,20 @@
         <div class="hotel-bloques">
             @foreach($habitacionesPorHotel as $hotelId => $habitaciones)
                 <div class="hotel-bloque">
-                    <h2>Hotel {{ $hotelId }}</h2>
-                    
+                    <h2>
+                        @switch($hotelId)
+                            @case(1)
+                                Hotel Sol
+                                @break
+                            @case(2)
+                                Hotel Luna
+                                @break
+                            @case(3)
+                                Hotel Estrella
+                                @break
+                            @default
+                                Hotel Desconocido
+                        @endswitch
                     <div class="habitaciones">
                         @foreach($habitaciones as $habitacion)
                             <div class="habitacion {{ strtolower($habitacion->estado) }}">
