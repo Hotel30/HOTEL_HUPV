@@ -21,10 +21,10 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::get('/estadisticas', [OcupacionController::class, 'estadisticasHabitaciones'])->name('estadisticas.habitaciones')->middleware('setCurrentSection:reservaciones');
+Route::get('/estadisticas', [OcupacionController::class, 'estadisticasHabitaciones'])->name('estadisticas.habitaciones')->middleware(['setCurrentSection:reservaciones','role:2,3']);
 
 
-Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSection:habitaciones')->group(function() {
+Route::prefix('habitaciones')->name('habitaciones.')->middleware(['setCurrentSection:habitaciones','role:2,3'])->group(function() {
     Route::get('/', [HabitacionController::class, 'index'])->name('index');
     Route::get('create', [HabitacionController::class, 'create'])->name('create');  
     Route::post('store', [HabitacionController::class, 'store'])->name('store'); 
@@ -33,9 +33,9 @@ Route::prefix('habitaciones')->name('habitaciones.')->middleware('setCurrentSect
     Route::delete('destroy/{id}', [HabitacionController::class, 'destroy'])->name('destroy'); 
 });
 
-Route::get('/', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware('setCurrentSection:ocupacion');
+Route::get('/', [OcupacionController::class, 'indexhabitaciones'])->name('ocupacion.index')->middleware(['setCurrentSection:ocupacion','role:2,3']);
 
-Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clientes')->group(function() {
+Route::prefix('clientes')->name('clientes.')->middleware(['setCurrentSection:clientes','role:2,3'])->group(function() {
     // rutas para los clientes rol 1
     Route::get('/', [UsersController::class, 'indexClientes'])->name('index'); 
     Route::get('create', [UsersController::class, 'createCliente'])->name('create');  
@@ -45,7 +45,8 @@ Route::prefix('clientes')->name('clientes.')->middleware('setCurrentSection:clie
     Route::delete('destroy/{id}', [UsersController::class, 'destroyCliente'])->name('destroy');  
     Route::get('clientes/tabla', [UsersController::class, 'tablaClientes'])->name('tabla');
 });
-Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:personal')->group(function() {
+
+Route::prefix('personal')->name('personal.')->middleware(['setCurrentSection:personal','role:2,3'])->group(function() {
     // rutas para los trabajadores y administradores roles 2 y 3
     Route::get('/', [UsersController::class, 'indexPersonal'])->name('index');  
     Route::get('create', [UsersController::class, 'createPersonal'])->name('create');  
@@ -55,7 +56,8 @@ Route::prefix('personal')->name('personal.')->middleware('setCurrentSection:pers
     Route::delete('destroy/{id}', [UsersController::class, 'destroyPersonal'])->name('destroy');  
     Route::get('personal/tabla', [UsersController::class, 'tablaPersonal'])->name('tabla');
 });
-Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:inventario')->group(function () {
+
+Route::prefix('inventario')->name('inventario.')->middleware(['setCurrentSection:inventario','role:2,3'])->group(function () {
     Route::get('/', [InventarioController::class, 'index'])->name('index');
     Route::get('create', [InventarioController::class, 'create'])->name('create');
     Route::post('/', [InventarioController::class, 'store'])->name('store');
@@ -74,7 +76,7 @@ Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])-
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('setCurrentSection:profile');
 
-Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSection:marketing')->group(function () {
+Route::prefix('promociones')->name('promociones.')->middleware(['setCurrentSection:marketing','role:2,3'])->group(function () {
     Route::get('/', [PromocionesController::class, 'index'])->name('index'); 
     Route::get('/create', [PromocionesController::class, 'create'])->name('create'); 
     Route::post('/', [PromocionesController::class, 'store'])->name('store'); 
