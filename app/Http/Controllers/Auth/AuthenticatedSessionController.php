@@ -32,7 +32,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('personal');
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::guard('web')->attempt($credentials)){
+            $user = Auth::user();
+            // dd($user);
+
+            if($user->rol==1){
+                return redirect()->intended('index');
+            }else{
+                return redirect()->intended('personal');
+            }
+        }
+
+        // return redirect()->intended('personal');
     }
 
     /**

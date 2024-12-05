@@ -17,8 +17,13 @@
                 <h2>Register</h2>
 
                 <div class="input-group">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input type="text" id="name" name="name" placeholder="Name" value="{{ old('name') }}" required autofocus>
+                </div>
+
+                <div class="input-group">
+                    <label for="name">Apellidos</label>
+                    <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" value="{{ old('apellidos') }}" required autofocus>
                 </div>
 
                 <div class="input-group">
