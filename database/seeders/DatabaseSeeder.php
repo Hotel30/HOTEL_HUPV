@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             PromocionesSeeder::class,
             UsersTableSeeder::class,
             HabitacionesSeeder::class,
-
+            OrdenesCompraSeeder::class,
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 

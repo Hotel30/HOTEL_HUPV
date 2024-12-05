@@ -9,6 +9,7 @@ use App\Http\Controllers\PromocionesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrdenCompraController;
 use FontLib\Table\Type\name;
 
 
@@ -55,8 +56,9 @@ Route::prefix('inventario')->name('inventario.')->middleware('setCurrentSection:
     Route::put('{inventario}', [InventarioController::class, 'update'])->name('update');
     Route::delete('{inventario}', [InventarioController::class, 'destroy'])->name('destroy');
     Route::post('/decrement/{id}', [InventarioController::class, 'decrement'])->name('decrement');
-    Route::get('/restock/{id}', [InventarioController::class, 'generateRestockOrder'])->name('restock');
+    Route::post('/restock/{id}', [InventarioController::class, 'createRestockOrder'])->name('createRestockOrder');
 });
+
 Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');
 Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware('setCurrentSection:inventario');
 
@@ -72,6 +74,13 @@ Route::prefix('promociones')->name('promociones.')->middleware('setCurrentSectio
     Route::get('/{promocion}/edit', [PromocionesController::class, 'edit'])->name('edit'); 
     Route::put('/{promocion}', [PromocionesController::class, 'update'])->name('update'); 
     Route::delete('/{promocion}', [PromocionesController::class, 'destroy'])->name('destroy'); 
+});
+
+Route::prefix('ordenes-compra')->name('ordenes-compra.')->middleware('setCurrentSection:inventario')->group(function () {
+    Route::get('/', [OrdenCompraController::class, 'index'])->name('index');
+    Route::post('store', [OrdenCompraController::class, 'store'])->name('store');
+    Route::delete('destroy/{id}', [OrdenCompraController::class, 'destroy'])->name('destroy');
+    Route::get('restock/{id}', [OrdenCompraController::class, 'printOrder'])->name('print');
 });
 
 Route::middleware(['auth'])->group(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Inventario;
 use App\Models\Hoteles;     
 use App\Models\Proveedores;  
+use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -79,35 +80,6 @@ class InventarioController extends Controller
         return view('Inventario.Filtro_Pdf_Inventario',compact('inventario','hoteles','proveedores'));
     }
 
-    public function generarPdf(Request $request)
-    {
-        $filterHotel = $request->has('filter_hotel');
-        $filterProveedor = $request->has('filter_proveedor');
-        $hotelId = $request->input('hotel_id');
-        $proveedorId = $request->input('proveedor_id');
-
-        $query = Inventario::query();
-
-        if ($filterHotel && !empty($hotelId)) {
-            $query->where('hotel_id', $hotelId);
-        }
-
-        if ($filterProveedor && !empty($proveedorId)) {
-            $query->where('proveedor_id', $proveedorId);
-        }
-
-        // Obtener resultados
-        $inventarios = $query->with(['hotel', 'proveedor'])->get();
-
-        $data = [
-            'titulo' => 'Styde.net'
-        ];
-
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('Inventario_pdf', compact('inventarios'));
-
-        return $pdf->download('reporte.pdf');
-    }
-
     public function decrement($id)
     {
         $inventario = Inventario::find($id);
@@ -119,22 +91,36 @@ class InventarioController extends Controller
         return response()->json(['cantidad' => $inventario->cantidad]);
     }
 
-    public function generateRestockOrder(Request $request, $id)
+    public function createRestockOrder(Request $request, $id)
     {
-        $inventario = Inventario::with('hotel', 'proveedor')->findOrFail($id);
-        $quantity = $request->query('quantity');
-        $price = $request->query('price');
-        $totalPrice = $quantity * $price;
+        try {
+            $inventario = Inventario::findOrFail($id);
+            $quantity = $request->input('quantity');
+            $price = $request->input('price');
 
-        $pdfOptions = new Options();
-        $pdfOptions->set('isHtml5ParserEnabled', true);
-        $pdfOptions->set('isRemoteEnabled', true);
+            OrdenCompra::create([
+                'hotel_id' => $inventario->hotel_id,
+                'proveedor_id' => $inventario->proveedor_id,
+                'producto_id' => $inventario->id_producto,
+                'cantidad' => $quantity,
+                'precio_unitario' => $price,
+                'subtotal' => $quantity * $price,
+                'fecha_orden' => now(),
+            ]);
 
-        $dompdf = new Dompdf($pdfOptions);
-        $dompdf->loadHtml(view('Inventario.restock_order', compact('inventario', 'quantity', 'price', 'totalPrice'))->render());
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+            $item = Inventario::find($id);
 
-        return $dompdf->stream('restock_order.pdf');
+            if ($item) {
+                $item->cantidad += $quantity;
+                $item->save();
+            }
+
+            return response()->json([
+                'message' => 'Restock order created successfully.',
+                'cantidad' => $item->cantidad
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

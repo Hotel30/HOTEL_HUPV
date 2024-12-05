@@ -277,7 +277,14 @@ a:visited {
 .action .menu ul li:hover a {
   color: #ffffff;
 }
-  
+
+.swal-title {
+  color: white;
+}
+.swal-input {
+  color: white;
+}
+ 
 /* Responsive styles */
 @media (max-width: 1200px) {
     .sidebar:hover {

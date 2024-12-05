@@ -65,6 +65,7 @@
     </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.querySelectorAll('.decrement-button').forEach(button => {
         button.addEventListener('click', function() {
@@ -95,12 +96,60 @@
         button.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
             const price = this.getAttribute('data-price');
-            const quantity = prompt('Enter the quantity to restock:');
-            if (quantity && !isNaN(quantity) && quantity > 0) {
-                window.location.href = `/inventario/restock/${id}?quantity=${quantity}&price=${price}`;
-            } else {
-                alert('Please enter a valid quantity.');
-            }
+            Swal.fire({
+                title: 'Cantidad a Comprar:',
+                input: 'number',
+                inputAttributes: {
+                    min: 1,
+                    step: 1
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Comprar',
+                showLoaderOnConfirm: true,
+                background: '#2e3b4e',
+                customClass: {
+                    title: 'swal-title',
+                    input: 'swal-input'
+                },
+                preConfirm: (quantity) => {
+                    if (quantity && !isNaN(quantity) && quantity > 0) {
+                        return fetch(`/inventario/restock/${id}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ quantity, price })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                throw new Error(data.error);
+                            }
+                            document.querySelector(`#inventario-${id} .cantidad`).textContent = data.cantidad;
+                            return data;
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(`Request failed: ${error}`);
+                        });
+                    } else {
+                        Swal.showValidationMessage('Ingresa una cantidad válida.');
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Orden de compra generada",
+                        icon: "success",
+                        background: '#2e3b4e',
+                        customClass: {
+                            title: 'swal-title',
+                            input: 'swal-input'
+                        }
+                    });
+                }
+            });
         });
     });
 </script>
@@ -108,6 +157,15 @@
 @endsection
 
 @section('sidebar.content')
-    <div class="sidebar-content">Stock</div>
-    <div class="sidebar-content">Ordenes</div>
+    <div class="sidebar-content" class="active">
+        <a href="{{ route('inventario.index') }}">
+                Stock
+        </a>
+    </div>
+
+    <div class="sidebar-content">
+    <a href="{{ route('ordenes-compra.index') }}">
+        Ordenes
+        </a>
+    </div>    
 @endsection
