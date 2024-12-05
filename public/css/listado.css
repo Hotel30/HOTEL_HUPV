@@ -75,13 +75,16 @@ main.table {
 table {
     width: 100%;
 }
-
+/*
+td, th {
+    max-width: 500px;
+}
+*/
 td img {
     width: 36px;
     height: 36px;
     margin-right: .5rem;
     border-radius: 50%;
-
     vertical-align: middle;
 }
 
@@ -187,7 +190,9 @@ thead th.active,tbody td.active {
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.decrement-button,
+.restock-button {
     padding: 10px 15px;
     font-size: 16px;
     font-weight: bold;
@@ -213,4 +218,20 @@ thead th.active,tbody td.active {
 
 .delete-button:hover {
     background-color: #a32e2e;  
+}
+
+.decrement-button {
+    background-color: #d8d841;  
+}
+
+.decrement-button:hover {
+    background-color: #b8b82e;  
+}
+
+.restock-button {
+    background-color: #41d841;  
+}
+
+.restock-button:hover {
+    background-color: #2eb82e;  
 }

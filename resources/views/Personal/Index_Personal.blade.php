@@ -25,19 +25,19 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Correo</th>
-                        <th>Puesto</th>
-                        <th>Turno</th>
+                        <th>Nombre <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Apellidos <span class="icon-arrow">&UpArrow;</span></th>
+                        <!--<th>Correo <span class="icon-arrow">&UpArrow;</span></th>-->
+                        <th>Puesto <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Turno <span class="icon-arrow">&UpArrow;</span></th>
                         <!--<th>Fecha Ingreso</th>-->
-                        <th>Teléfono</th>
+                        <th>Teléfono <span class="icon-arrow">&UpArrow;</span></th>
                         <!--<th>Dirección</th>-->
-                        <th>Hora Entrada</th>
-                        <th>Hora Salida</th>
-                        <th>Área Asignada</th>
+                        <th>Hora Entrada <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Hora Salida <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Área Asignada <span class="icon-arrow">&UpArrow;</span></th>
                         <!--<th>Tarea Asignada</th>-->
-                        <th>Hotel</th>
+                        <th>Hotel <span class="icon-arrow">&UpArrow;</span></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{ $trabajador->nombre }}</td>
                             <td>{{ $trabajador->apellidos }}</td>
-                            <td>{{ $trabajador->email }}</td>
+                            <!--<td>{{ $trabajador->email }}</td>-->
                             <td>{{ $trabajador->puesto }}</td>
                             <td>{{ $trabajador->turno }}</td>
                             <!--<<td>{{ $trabajador->fecha_ingreso }}</td>-->
@@ -63,7 +63,7 @@
                                     <form action="{{ route('personal.destroy', $trabajador->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="delete-button">Eliminar</button>
+                                        <button type="submit" class="delete-button">Borrar</button>
                                     </form>
                                 </div>
                             </td>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking</title>
     <link rel="stylesheet" href="{{ asset('/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/contacto.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -21,7 +22,7 @@
                 <li><a href="{{ route('hotel') }}">Hoteles</a></li>
                 <li><a href="#">Sobre nosotros</a></li>
                 <li><a href="{{ route('contacto') }}">Contacto</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="{{ route('login') }}">Login</a></li>
             </ul>
         </nav>
     </header>

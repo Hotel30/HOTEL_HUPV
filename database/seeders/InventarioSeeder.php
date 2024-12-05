@@ -32,6 +32,7 @@ class InventarioSeeder extends Seeder
                     'proveedor_id' => $proveedores[array_rand($proveedores)], 
                     'nombre_producto' => $producto,
                     'cantidad' => rand(50, 500),  
+                    'precio' => rand(10, 100),
                     'descripcion' => 'Descripción del producto ' . $producto,
                     'created_at' => now(),
                     'updated_at' => now(),

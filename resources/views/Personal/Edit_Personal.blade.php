@@ -100,7 +100,7 @@
 
             <div class="button-group">
                 <a href="{{ route('personal.index') }}" class="cancel-button">Cancelar</a>
-                <button type="submit" class="cancel-button">Registrar</button>
+                <button type="submit" class="cancel-button">Guardar Cambios</button>
             </div>
 
         </form>
