@@ -75,8 +75,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/restock/{id}', [InventarioController::class, 'createRestockOrder'])->name('createRestockOrder');
     });
 
-    Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware('setCurrentSection:inventario');
-    Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware('setCurrentSection:inventario');
+    Route::get('/reporte', [InventarioController::class, 'filtroPdf'])->name('pdf')->middleware(['setCurrentSection:inventario','role:2,3']);
+    Route::get('/reporte/generar', [InventarioController::class, 'generarPdf'])->name('generar')->middleware(['setCurrentSection:inventario','role:2,3']);
 
     Route::get('/reportePersonal', [PersonalController::class, 'filtrar'])->name('pedro')->middleware('setCurrentSection:personal');
     Route::get('/reportePersonal/generar', [PersonalController::class, 'generate'])->name('jesus')->middleware('setCurrentSection:personal');

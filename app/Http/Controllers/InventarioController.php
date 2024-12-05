@@ -91,6 +91,35 @@ class InventarioController extends Controller
         return response()->json(['cantidad' => $inventario->cantidad]);
     }
 
+        public function generarPdf(Request $request)
+    {
+        $filterHotel = $request->has('filter_hotel');
+        $filterProveedor = $request->has('filter_proveedor');
+        $hotelId = $request->input('hotel_id');
+        $proveedorId = $request->input('proveedor_id');
+
+        $query = Inventario::query();
+
+        if ($filterHotel && !empty($hotelId)) {
+            $query->where('hotel_id', $hotelId);
+        }
+
+        if ($filterProveedor && !empty($proveedorId)) {
+            $query->where('proveedor_id', $proveedorId);
+        }
+
+        // Obtener resultados
+        $inventarios = $query->with(['hotel', 'proveedor'])->get();
+
+        $data = [
+            'titulo' => 'Styde.net'
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('Inventario_pdf', compact('inventarios'));
+
+        return $pdf->download('reporte.pdf');
+    }
+
     public function createRestockOrder(Request $request, $id)
     {
         try {
