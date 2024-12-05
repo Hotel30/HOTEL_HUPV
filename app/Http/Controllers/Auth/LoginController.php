@@ -23,6 +23,8 @@ class LoginController extends Controller
     $credentials = $request->only('email', 'password');
     
     if (Auth::guard('web')->attempt($credentials)) {
+
+        $user = Auth::user();
         return redirect()->route('clientes.index');  
     }
 
