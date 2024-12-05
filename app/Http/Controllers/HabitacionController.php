@@ -64,4 +64,29 @@ class HabitacionController extends Controller
 
         return redirect()->route('habitaciones.index')->with('success', 'Habitación eliminada con éxito.');
     }
+
+    public function habitacionesDisponibles(Request $request)
+{
+    $hotelId = $request->input('hotel_id');
+    $tipoReservacion = $request->input('tipo_reservacion');
+
+    // Validar entrada
+    if (!$hotelId || !$tipoReservacion) {
+        return response()->json([], 400);
+    }
+
+    // Filtrar habitaciones disponibles según el hotel y el tipo de reservación
+    $habitaciones = Habitacion::where('hotel_id', $hotelId)
+        ->where('estado', 'disponible')
+        ->when($tipoReservacion === 'individual', function ($query) {
+            $query->whereIn('tipo_habitacion_id', [1, 2]); // Habitaciones sencillas y suites
+        })
+        ->when($tipoReservacion === 'grupal', function ($query) {
+            $query->whereIn('tipo_habitacion_id', [3, 4]); // Habitaciones con varias camas
+        })
+        ->get();
+
+    return response()->json($habitaciones);
+}
+
 }

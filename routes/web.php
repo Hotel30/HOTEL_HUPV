@@ -10,6 +10,15 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\ProfileController;
 use FontLib\Table\Type\name;
+use App\Http\Controllers\ReservacionesController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/reservaciones/create', [ReservacionesController::class, 'create'])->name('reservaciones.create');
+    Route::post('/reservaciones', [ReservacionesController::class, 'store'])->name('reservaciones.store');
+    Route::get('/reservaciones/{id}', [ReservacionesController::class, 'show'])->name('reservaciones.show');
+});
+
+
 
 
 Route::get('/estadisticas', [OcupacionController::class, 'estadisticasHabitaciones'])->name('estadisticas.habitaciones')->middleware('setCurrentSection:reservaciones');

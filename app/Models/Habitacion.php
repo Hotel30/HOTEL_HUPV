@@ -14,4 +14,13 @@ class Habitacion extends Model
         'estado',
         'piso'
     ];
+    public function hotel()
+    {
+        return $this->belongsTo(Hoteles::class, 'hotel_id');
+    }
+
+    public function reservaciones()
+    {
+        return $this->hasMany(ReservacionHabitacion::class, 'habitacion_id');
+    }
 }

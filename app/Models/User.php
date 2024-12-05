@@ -72,10 +72,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function hotel()
-    {
-        return $this->belongsTo(Hoteles::class, 'id_hotel');
-    }
+   
 
     /**
      * 
@@ -86,5 +83,15 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function reservaciones()
+    {
+        return $this->hasMany(Reservacion::class, 'cliente_id');
+    }
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hoteles::class, 'id_hotel');
     }
 }
