@@ -195,7 +195,6 @@ public function updatePersonal(Request $request, $id)
         'password' => 'nullable|confirmed|min:8', 
     ]);
 
-   
     $trabajador->nombre = $validatedData['nombre'];
     $trabajador->apellidos = $validatedData['apellidos'];
     $trabajador->email = $validatedData['email'];
@@ -243,7 +242,11 @@ public function destroyPersonal($id)
     return redirect()->route('personal.index')->with('success', 'Trabajador desactivado con éxito.');
 }
 
+//pdfs xd
 
+public function generarPdf(){
+    
+}
 
 
 }
