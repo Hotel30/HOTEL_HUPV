@@ -9,11 +9,11 @@ class HabitacionController extends Controller
     public function index()
     {
         $habitaciones = Habitacion::all();
-        return view('habitaciones.index', compact('habitaciones'));
+        return view('Habitaciones.Index', compact('habitaciones'));
     }
     public function create()
     {
-        return view('habitaciones.create');
+        return view('Habitaciones.Create');
     }
 
     public function store(Request $request)
@@ -35,7 +35,7 @@ class HabitacionController extends Controller
     public function edit($id)
     {
         $habitacion = Habitacion::findOrFail($id);
-        return view('habitaciones.edit', compact('habitacion'));
+        return view('Habitaciones.Edit', compact('habitacion'));
     }
 
     public function update(Request $request, $id)

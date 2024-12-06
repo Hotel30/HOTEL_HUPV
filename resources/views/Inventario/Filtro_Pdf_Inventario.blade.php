@@ -42,17 +42,30 @@
     
         <div class="button-group">
             <a href="{{ route('inventario.index') }}" class="cancel-button">Cancelar</a>
-            <button type="submit" class="cancel-button">Generar PDF</button>
+            <button id="button" type="submit" class="cancel-button">Generar PDF</button>
         </div>    </form>
     
     <script>
-        document.getElementById('filter_hotel').addEventListener('change', function () {
-            document.getElementById('hotel_id').disabled = !this.checked;
-        });
-    
-        document.getElementById('filter_proveedor').addEventListener('change', function () {
-            document.getElementById('proveedor_id').disabled = !this.checked;
-        });
+            const button = document.getElementById('button');
+
+            button.style.display = 'none';
+
+            function verificarCheckboxes() {
+                const filterHotel = document.getElementById('filter_hotel').checked;
+                const filterTurno = document.getElementById('filter_proveedor').checked;
+
+                button.style.display = (filterHotel || filterTurno) ? 'block' : 'none';
+            }
+
+            document.getElementById('filter_hotel').addEventListener('change', function () {
+                document.getElementById('hotel_id').disabled = !this.checked;
+                verificarCheckboxes(); 
+            });
+
+            document.getElementById('filter_proveedor').addEventListener('change', function () {
+                document.getElementById('proveedor_id').disabled = !this.checked;
+                verificarCheckboxes(); 
+            });
     </script>
 </main>
 @endsection

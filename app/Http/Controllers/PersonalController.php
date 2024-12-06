@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Personal;
 use App\Models\Hoteles;
 use App\Models\Rol;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PersonalController extends Controller
@@ -125,12 +126,13 @@ class PersonalController extends Controller
 
     public function generate(Request $request)
     {
+        // dd($request);
         $filterHotel = $request->has('filter_hotel');
         $filterTurno = $request->has('filter_turno');
         $hotelId = $request->input('hotel_id');
         $turnoId = $request->input('turno_id');
-            
-        $query = Personal::query();
+    
+        $query = User::query();
 
         if ($filterHotel && !empty($hotelId)) {
             $query->where('id_hotel', $hotelId);
@@ -140,8 +142,9 @@ class PersonalController extends Controller
             $query->where('turno', $turnoId);
         }
 
-        // Obtener resultados con relaciones
-        $personal = $query->with(['hotel', 'rol'])->get(); // Cambié `turno` a `rol` si está relacionado a roles.
+        $query->whereIn('rol', [2, 3]);
+
+        $personal = $query->with(['hotel'])->get(); 
         
         // Generar el PDF
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('Personal_pdf', compact('personal'));
