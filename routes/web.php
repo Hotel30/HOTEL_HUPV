@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::get('/index', function () {
+Route::get('/', function () {
     return view('Public_Views.index');
 })->name('index');
 
