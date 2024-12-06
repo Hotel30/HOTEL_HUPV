@@ -55,7 +55,7 @@
                 </div>
             </a>
         </div>
-        <a href="{{ route('index') }}" class="header-button">Home</a>
+        <a href="{{ route('index') }}" class="header-button" id="casa">Home</a>
         <div></div>
         <div class="action">
             <div class="profile" onclick="menuToggle();">

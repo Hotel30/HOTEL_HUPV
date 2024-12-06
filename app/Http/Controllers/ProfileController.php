@@ -11,14 +11,15 @@ class ProfileController extends Controller
 {
     public function show()
     {
-        /*
+        
         // Fetch the currently authenticated user
-        $user = Auth::user();
-        return view('profile.show', compact('user'));
-        */
-
+        $trabajador = Auth::user();
+        return view('profile.show', compact('trabajador'));
+        
+        /*
         // Replace 1 with the desired user ID
         $trabajador = User::find(16);
         return view('profile.show', compact('trabajador'));
+        */
     }
 }

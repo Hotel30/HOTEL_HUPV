@@ -71,6 +71,15 @@
 @endsection
 
 @section('sidebar.content')
-    <div class="sidebar-content">Stock</div>
-    <div class="sidebar-content">Ordenes</div>
+    <div class="sidebar-content" class="active">
+        <a href="{{ route('inventario.index') }}">
+                Stock
+        </a>
+    </div>
+
+    <div class="sidebar-content">
+    <a href="{{ route('ordenes-compra.index') }}">
+        Ordenes
+        </a>
+    </div>    
 @endsection

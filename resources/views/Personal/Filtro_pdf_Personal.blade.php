@@ -36,7 +36,7 @@
         </div>
     
         <div class="button-group">
-            <a href="{{ route('inventario.index') }}" class="cancel-button">Cancelar</a>
+            <a href="{{ route('personal.index') }}" class="cancel-button">Cancelar</a>
             <button id="button" type="submit" class="cancel-button">Generar PDF</button>
         </div>    </form>
     
