@@ -55,13 +55,47 @@ public function indexPersonal()
     public function storeCliente(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
+            'nombre' => 'required|string|max:35',
+            'apellidos' => 'required|string|max:55',
             'email' => 'required|string|email|max:255|unique:users',
-            'telefono' => 'required|string|max:15',  
+            'telefono' => [
+                'required',
+                'string',
+                'max:15',
+                'regex:/^[\+0-9\s\-]*$/',  
+            ], 
             'direccion' => 'required|string|max:255', 
             'password' => 'required|string|min:8|confirmed', 
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
+            'nombre.max' => 'El campo nombre no debe exceder los 35 caracteres.',
+            
+            'apellidos.required' => 'El campo apellidos es obligatorio.',
+            'apellidos.string' => 'El campo apellidos debe ser una cadena de texto.',
+            'apellidos.max' => 'El campo apellidos no debe exceder los 55 caracteres.',
+            
+            'email.required' => 'El campo correo electrónico es obligatorio.',
+            'email.string' => 'El campo correo electrónico debe ser una cadena de texto.',
+            'email.email' => 'El correo electrónico no tiene un formato válido.',
+            'email.max' => 'El correo electrónico no debe exceder los 255 caracteres.',
+            'email.unique' => 'Este correo electrónico ya está registrado.',
+            
+            'telefono.required' => 'El campo teléfono es obligatorio.',
+            'telefono.string' => 'El campo teléfono debe ser una cadena de texto.',
+            'telefono.max' => 'El campo teléfono no debe exceder los 15 caracteres.',
+            'telefono.regex' => 'El teléfono solo debe contener números, +, espacios y guiones.',
+            
+            'direccion.required' => 'El campo dirección es obligatorio.',
+            'direccion.string' => 'El campo dirección debe ser una cadena de texto.',
+            'direccion.max' => 'El campo dirección no debe exceder los 255 caracteres.',
+            
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password.string' => 'El campo contraseña debe ser una cadena de texto.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
+        
     
         
         User::create([
@@ -148,12 +182,41 @@ public function indexPersonal()
 
     
     $request->validate([
-        'nombre' => 'required|string|max:255',
-        'apellidos' => 'required|string|max:255',
+        'nombre' => 'required|string|max:35',  
+        'apellidos' => 'required|string|max:55', 
         'email' => 'required|string|email|max:255|unique:users,email,' . $cliente->id,
-        'telefono' => 'required|string|max:15',  
-        'direccion' => 'required|string|max:255', 
+        'telefono' => [
+            'required',
+            'string',
+            'max:15',  
+            'regex:/^[\+0-9\s\-]*$/',  
+        ],  
+        'direccion' => 'required|string|max:255',  
+    ], [
+        'nombre.required' => 'El campo nombre es obligatorio.',
+        'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
+        'nombre.max' => 'El campo nombre no debe exceder los 35 caracteres.',
+        
+        'apellidos.required' => 'El campo apellidos es obligatorio.',
+        'apellidos.string' => 'El campo apellidos debe ser una cadena de texto.',
+        'apellidos.max' => 'El campo apellidos no debe exceder los 55 caracteres.',
+        
+        'email.required' => 'El campo correo electrónico es obligatorio.',
+        'email.string' => 'El campo correo electrónico debe ser una cadena de texto.',
+        'email.email' => 'El correo electrónico no tiene un formato válido.',
+        'email.max' => 'El correo electrónico no debe exceder los 255 caracteres.',
+        'email.unique' => 'Este correo electrónico ya está registrado.',
+        
+        'telefono.required' => 'El campo teléfono es obligatorio.',
+        'telefono.string' => 'El campo teléfono debe ser una cadena de texto.',
+        'telefono.max' => 'El campo teléfono no debe exceder los 15 caracteres.',
+        'telefono.regex' => 'El teléfono solo debe contener números, +, espacios y guiones.',
+        
+        'direccion.required' => 'El campo dirección es obligatorio.',
+        'direccion.string' => 'El campo dirección debe ser una cadena de texto.',
+        'direccion.max' => 'El campo dirección no debe exceder los 255 caracteres.',
     ]);
+    
 
     $cliente->update([
         'nombre' => $request->nombre,
@@ -245,7 +308,6 @@ public function destroyPersonal($id)
 //pdfs xd
 
 public function generarPdf(){
-    
 }
 
 

@@ -12,58 +12,37 @@
             @csrf
             <div class="input-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
-                @error('nombre')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" maxlength="35" required>
             </div>
 
             <div class="input-group">
                 <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" name="apellidos" value="{{ old('apellidos') }}" required>
-                @error('apellidos')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="text" id="apellidos" name="apellidos" value="{{ old('apellidos') }}" maxlength="55" required>
             </div>
 
             <div class="input-group">
                 <label for="telefono">Teléfono:</label>
-                <input type="text" id="telefono" name="telefono" value="{{ old('telefono') }}" required>
-                @error('telefono')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="text" id="telefono" name="telefono" value="{{ old('telefono') }}" maxlength="15" required>
             </div>
 
             <div class="input-group">
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" value="{{ old('direccion') }}" required>
-                @error('direccion')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="text" id="direccion" name="direccion" value="{{ old('direccion') }}" maxlength="255" required>
             </div>
 
             <div class="input-group">
                 <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required>
-                @error('email')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="email" id="email" name="email" value="{{ old('email') }}" maxlength="255" required>
             </div>
 
             <div class="input-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-                @error('password')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="password" id="password" name="password" minlength="8" required>
             </div>
 
             <div class="input-group">
                 <label for="password_confirmation">Confirmar Contraseña:</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required>
-                @error('password_confirmation')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                <input type="password" id="password_confirmation" name="password_confirmation" minlength="8" required>
             </div>
 
             <div class="button-group">
@@ -72,4 +51,19 @@
             </div>
         </form>
     </div>
+
+    @if ($errors->any())
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.onload = function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonText: 'Entendido'
+            });
+        };
+    </script>
+    @endif
+
 @endsection
