@@ -104,7 +104,7 @@ public function indexPersonal()
             'email' => $request->email,
             'telefono' => $request->telefono,
             'direccion' => $request->direccion,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'rol' => 1, // rol cliente
         ]);
     
@@ -138,7 +138,7 @@ public function indexPersonal()
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'telefono' => $request->telefono,
             'direccion' => $request->direccion,
             'rol' => 2, // trabajador por defecto, admins solo pueden crear admins
