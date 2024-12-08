@@ -1,142 +1,153 @@
 @extends('layouts.app')
 
 @section('main.content')
-<div class="main-content">
+<div class="container">
     <h1>Crear Reservación</h1>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('reservaciones.store') }}" method="POST">
         @csrf
 
-        <h4>Información General</h4>
-        <div class="mb-3">
-            <label for="cliente_id" class="form-label">Cliente (ID)</label>
-            <input type="number" name="cliente_id" id="cliente_id" class="form-control" value="{{ auth()->user()->id }}" readonly>
+        
+        <div class="form-group">
+            <label for="nombre">Nombre del Cliente</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label for="hotel_id" class="form-label">Hotel</label>
-            <select name="hotel_id" id="hotel_id" class="form-select" required>
-                <option value="" selected disabled>Seleccione un hotel</option>
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" name="telefono" id="telefono" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" name="direccion" id="direccion" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo Electrónico</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="hotel_id">Hotel:</label>
+            <select id="hotel_id" name="hotel_id" class="form-control" onchange="fetchOptions()" required>
+                <option value="">Seleccione un hotel</option>
                 @foreach ($hoteles as $hotel)
                     <option value="{{ $hotel->id }}">{{ $hotel->nombre }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="tipo_reservacion" class="form-label">Tipo de Reservación</label>
-            <select name="tipo_reservacion" id="tipo_reservacion" class="form-select" required>
-                <option value="" selected disabled>Seleccione el tipo</option>
-                <option value="individual">Individual</option>
-                <option value="grupal">Grupal</option>
+        
+        <div class="form-group">
+            <label for="tipo_habitacion_id">Tipo de Habitación:</label>
+            <select id="tipo_habitacion_id" name="tipo_habitacion_id" class="form-control" onchange="fetchOptions()" required>
+                <option value="">Seleccione un tipo</option>
+                <option value="1">Individual</option>
+                <option value="2">Doble</option>
+                <option value="3">Suite</option>
+                <option value="4">Suite Presidencial</option>
+                <option value="5">Familiar</option>
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="fecha_entrada" class="form-label">Fecha de Entrada</label>
+        <select id="habitaciones">
+    
+</select>
+
+
+<div class="form-group">
+            <label for="fecha_entrada">Fecha de Entrada</label>
             <input type="date" name="fecha_entrada" id="fecha_entrada" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label for="fecha_salida" class="form-label">Fecha de Salida</label>
+        <div class="form-group">
+            <label for="fecha_salida">Fecha de Salida</label>
             <input type="date" name="fecha_salida" id="fecha_salida" class="form-control" required>
         </div>
 
-        <h4>Habitaciones</h4>
-        <div class="mb-3">
-            <label for="habitaciones" class="form-label">Seleccione Habitaciones</label>
-            <select name="habitaciones[]" id="habitaciones" class="form-select" multiple required>
-                {{-- Las opciones se llenarán dinámicamente con JavaScript --}}
-            </select>
-        </div>
+        <div id="inventario">
+   
+</div>
 
-        <h4>Promoción</h4>
-        <div class="mb-3">
-            <label for="codigo_promocional" class="form-label">Código Promocional</label>
+       
+        <div class="form-group">
+            <label for="codigo_promocional">Cupón Promocional</label>
             <input type="text" name="codigo_promocional" id="codigo_promocional" class="form-control">
         </div>
 
-        <h4>Artículos Adicionales</h4>
-        <div id="articulos-container">
-            @foreach ($inventarios as $item)
-                <div class="form-check">
-                    <input type="checkbox" name="articulos[{{ $item->id_producto }}][id]" value="{{ $item->id_producto }}" class="form-check-input">
-                    <label class="form-check-label">
-                        {{ $item->nombre_producto }} - ${{ number_format($item->precio, 2) }}
-                        <input type="number" name="articulos[{{ $item->id_producto }}][cantidad]" class="form-control mt-2" placeholder="Cantidad" min="1">
-                    </label>
-                </div>
-            @endforeach
+       
+        <div class="form-group">
+            <label for="notas">Notas</label>
+            <textarea name="notas" id="notas" class="form-control"></textarea>
         </div>
 
-        <h4>Notas</h4>
-        <div class="mb-3">
-            <textarea name="notas" id="notas" class="form-control" rows="4"></textarea>
-        </div>
-
-        <h4>Método de Pago</h4>
-        <div class="mb-3">
-            <label for="metodo_pago" class="form-label">Método de Pago</label>
-            <input type="text" name="metodo_pago" id="metodo_pago" class="form-control" value="PayPal" readonly>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Crear Reservación</button>
+        
+        <button type="submit" class="btn btn-primary">Reservar</button>
     </form>
 </div>
-@endsection
 
-@section('scripts')
 <script>
-    $(document).ready(function () {
-        // Variables de los elementos
-        const $hotelSelect = $('#hotel_id');
-        const $tipoReservacionSelect = $('#tipo_reservacion');
-        const $habitacionesSelect = $('#habitaciones');
+   
+function fetchOptions() {
+    const hotelId = document.getElementById('hotel_id').value;
+    const tipoHabitacionId = document.getElementById('tipo_habitacion_id').value;
 
-        // Evento para cargar habitaciones al cambiar el hotel o tipo de reservación
-        $hotelSelect.add($tipoReservacionSelect).on('change', function () {
-            const hotelId = $hotelSelect.val();
-            const tipoReservacion = $tipoReservacionSelect.val();
+    fetch(`/api/filtrar-datos?hotel_id=${hotelId}&tipo_habitacion_id=${tipoHabitacionId}`)
+        .then(response => response.json())
+        .then(data => {
+            
+            const habitacionesSelect = document.getElementById('habitaciones');
+            habitacionesSelect.innerHTML = '';
+            data.habitaciones.forEach(habitacion => {
+                habitacionesSelect.innerHTML += `<option value="${habitacion.id}">${habitacion.numero_habitacion}</option>`;
+            });
 
-            // Limpiar opciones anteriores
-            $habitacionesSelect.empty();
-
-            if (hotelId && tipoReservacion) {
-                // Llamada AJAX para obtener las habitaciones filtradas
-                $.ajax({
-                    url: "{{ route('api.habitaciones.disponibles') }}", // Ruta que devolverá habitaciones
-                    method: "GET",
-                    data: { hotel_id: hotelId, tipo_reservacion: tipoReservacion },
-                    success: function (data) {
-                        // Rellenar select con las habitaciones recibidas
-                        if (data.length > 0) {
-                            data.forEach(function (habitacion) {
-                                $habitacionesSelect.append(
-                                    `<option value="${habitacion.id}">Habitación ${habitacion.numero_habitacion} - ${habitacion.estado} - $${parseFloat(habitacion.tarifa).toFixed(2)}</option>`
-                                );
-                            });
-                        } else {
-                            $habitacionesSelect.append('<option value="">No hay habitaciones disponibles</option>');
-                        }
-                    },
-                    error: function () {
-                        alert('Error al cargar las habitaciones. Intente nuevamente.');
-                    }
-                });
-            } else {
-                $habitacionesSelect.append('<option value="">Seleccione un hotel y tipo de reservación</option>');
-            }
+           
+            const inventarioDiv = document.getElementById('inventario');
+            inventarioDiv.innerHTML = '';
+            data.inventario.forEach(item => {
+                inventarioDiv.innerHTML += `
+                    <div class="form-group d-flex align-items-center">
+                        <label class="mr-3">${item.nombre_producto}</label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="updateQuantity(${item.id_producto}, -1)">-</button>
+                        <input type="number" id="cantidad_${item.id_producto}" value="0" min="0" class="form-control mx-2 text-center" style="width: 60px;" readonly>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="updateQuantity(${item.id_producto}, 1)">+</button>
+                    </div>`;
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
         });
+}
+
+
+function updateQuantity(productId, change) {
+    const cantidadInput = document.getElementById(`cantidad_${productId}`);
+    let cantidad = parseInt(cantidadInput.value);
+
+   
+    cantidad = Math.max(0, cantidad + change);
+    cantidadInput.value = cantidad;
+
+   
+    fetch(`/api/actualizar-inventario`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id_producto: productId,
+            cantidad: cantidad
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Inventario actualizado:', data);
+    })
+    .catch(error => {
+        console.error('Error al actualizar el inventario:', error);
     });
+}
 </script>
 @endsection

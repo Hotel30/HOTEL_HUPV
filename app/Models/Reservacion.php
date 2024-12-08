@@ -6,10 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservacion extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'cliente_id', 'hotel_id', 'tipo_reservacion', 'fecha_entrada', 'fecha_salida', 
-        'noches', 'monto_total', 'codigo_promocional', 'descuento_aplicado', 
-        'notas', 'metodo_pago', 'estado'
+        'cliente_id',
+        'hotel_id',
+        'fecha_entrada',
+        'fecha_salida',
+        'noches',
+        'monto_total',
+        'codigo_promocional',
+        'descuento_aplicado',
+        'notas',
+        'metodo_pago',
+        'estado',
     ];
 
     public function cliente()
@@ -19,18 +29,22 @@ class Reservacion extends Model
 
     public function hotel()
     {
-        return $this->belongsTo(Hoteles::class, 'hotel_id');
+        return $this->belongsTo(Hoteles::class);
     }
 
     public function habitaciones()
     {
-        return $this->hasMany(ReservacionHabitacion::class, 'reservacion_id');
+        return $this->belongsToMany(Habitacion::class, 'reservacion_habitacion','reservacion_id', 'habitacion_id')
+                    ->withPivot('tarifa')
+                    ->withTimestamps();
     }
+
+   
 
     public function inventarios()
     {
-        return $this->hasMany(ReservacionInventario::class, 'reservacion_id');
+        return $this->belongsToMany(Inventario::class, 'reservacion_inventarios')
+                    ->withPivot('cantidad', 'precio_unitario', 'subtotal')
+                    ->withTimestamps();
     }
 }
-
-

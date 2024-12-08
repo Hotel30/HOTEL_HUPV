@@ -52,8 +52,9 @@
                             <!--<<td>{{ $trabajador->fecha_ingreso }}</td>-->
                             <td>{{ $trabajador->telefono }}</td>
                             <!--<td>{{ $trabajador->direccion }}</td>-->
-                            <td>{{ $trabajador->hora_entrada->format('H:i') }}</td>  
-                            <td>{{ $trabajador->hora_salida->format('H:i') }}</td>   
+                            <td>{{ $trabajador->hora_entrada ? $trabajador->hora_entrada->format('H:i') : 'No disponible' }}</td>
+<td>{{ $trabajador->hora_salida ? $trabajador->hora_salida->format('H:i') : 'No disponible' }}</td>
+
                             <td>{{ $trabajador->area_asignada }}</td>
                             <!--<td>{{ $trabajador->tarea_asignada }}</td>-->
                             <td>{{ $trabajador->hotel->nombre ?? 'No asignado' }}</td> 

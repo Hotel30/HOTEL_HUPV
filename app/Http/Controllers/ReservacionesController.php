@@ -7,133 +7,175 @@ use App\Models\Habitacion;
 use App\Models\Inventario;
 use App\Models\Promociones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class ReservacionesController extends Controller
 {
-    /**
-     * Mostrar el formulario de creación de una reservación.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        $hoteles = Hoteles::all(); // Lista de hoteles disponibles
-        $inventarios = Inventario::all(); // Artículos disponibles
-        return view('Modulo_reservaciones.create', compact('hoteles', 'inventarios'));
-    }
 
-    /**
-     * Almacenar una nueva reservación.
-     */
+        $hoteles = Hoteles::all();
+    
+        //promociones activas
+        $promociones = Promociones::where('activo', true)
+            ->whereDate('fecha_inicio', '<=', now())
+            ->whereDate('fecha_fin', '>=', now())
+            ->get();
+    
+        // habitaciones disponibles dependiendo el hotel y tipo_habitacion
+        $habitaciones = [];
+        if ($request->has('hotel_id') && $request->has('tipo_habitacion_id')) {
+            $habitaciones = Habitacion::where('hotel_id', $request->hotel_id)
+                ->where('tipo_habitacion_id', $request->tipo_habitacion_id)
+                ->where('estado', 'disponible')
+                ->select('id', 'numero_habitacion', 'tarifa', 'piso') 
+                ->get();
+
+                
+        }
+    
+        // se traen los productos de la tabla inventario
+        $inventario = [];
+        if ($request->has('hotel_id')) {
+            $inventario = Inventario::where('hotel_id', $request->hotel_id)
+                ->get(['id_producto', 'nombre_producto', 'cantidad', 'descripcion']);
+        }
+    
+        if ($request->has('hotel_id')) {
+            $inventario = Inventario::where('hotel_id', $request->hotel_id)
+                ->get(['id_producto', 'nombre_producto', 'cantidad', 'descripcion']); 
+        }
+        
+        return view('Modulo_Reservaciones.create', compact('hoteles', 'promociones', 'habitaciones', 'inventario'));
+    }
+    
+
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'cliente_id' => 'required|exists:users,id',
             'hotel_id' => 'required|exists:hoteles,id',
-            'tipo_reservacion' => 'required|in:individual,grupal',
-            'fecha_entrada' => 'required|date|after_or_equal:today',
+            'fecha_entrada' => 'required|date|after:today',
             'fecha_salida' => 'required|date|after:fecha_entrada',
             'habitaciones' => 'required|array',
             'habitaciones.*' => 'exists:habitaciones,id',
-            'codigo_promocional' => 'nullable|string|max:50',
-            'articulos' => 'nullable|array',
-            'articulos.*.id' => 'exists:inventario,id_producto',
-            'articulos.*.cantidad' => 'integer|min:1',
+            'inventario' => 'nullable|array',
+            'inventario.*.id' => 'exists:inventario,id_producto',
+            'inventario.*.cantidad' => 'required|integer|min:1',
+            'codigo_promocional' => 'nullable|exists:promociones,codigo_promocional',
             'notas' => 'nullable|string',
+            'nombre' => 'required|string|max:255',
+            'telefono' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'direccion' => 'required|string|max:255',
         ]);
-
-        // Obtener datos generales
-        $cliente_id = $request->cliente_id;
-        $hotel_id = $request->hotel_id;
-        $tipo_reservacion = $request->tipo_reservacion;
-        $fecha_entrada = $request->fecha_entrada;
-        $fecha_salida = $request->fecha_salida;
-        $habitaciones = $request->habitaciones;
-        $codigo_promocional = $request->codigo_promocional;
-        $articulos = $request->articulos;
-        $notas = $request->notas;
-
-        // Calcular noches
-        $noches = (new \DateTime($fecha_entrada))->diff(new \DateTime($fecha_salida))->days;
-
-        // Calcular monto de habitaciones
-        $monto_habitaciones = Habitacion::whereIn('id', $habitaciones)->sum('tarifa') * $noches;
-
-        // Validar promoción
-        $descuento_aplicado = 0;
-        if ($codigo_promocional) {
-            $promocion = Promociones::where('codigo_promocional', $codigo_promocional)
-                ->where('activo', true)
-                ->whereDate('fecha_inicio', '<=', $fecha_entrada)
-                ->whereDate('fecha_fin', '>=', $fecha_entrada)
-                ->first();
-
-            if ($promocion) {
-                $descuento_aplicado = $promocion->descuento;
-            }
-        }
-
-        // Aplicar descuento
-        $monto_total = $monto_habitaciones - ($monto_habitaciones * $descuento_aplicado / 100);
-
-        // Calcular monto por artículos
-        $monto_articulos = 0;
-        if ($articulos) {
-            foreach ($articulos as $articulo) {
-                $inventario = Inventario::find($articulo['id']);
-                $monto_articulos += $inventario->precio * $articulo['cantidad'];
-            }
-        }
-
-        // Sumar artículos al total
-        $monto_total += $monto_articulos;
-
-        // Crear la reservación
-        $reservacion = Reservacion::create([
-            'cliente_id' => $cliente_id,
-            'hotel_id' => $hotel_id,
-            'tipo_reservacion' => $tipo_reservacion,
-            'fecha_entrada' => $fecha_entrada,
-            'fecha_salida' => $fecha_salida,
-            'noches' => $noches,
-            'monto_total' => $monto_total,
-            'codigo_promocional' => $codigo_promocional,
-            'descuento_aplicado' => $descuento_aplicado,
-            'notas' => $notas,
-            'metodo_pago' => 'paypal',
-        ]);
-
-        // Asignar habitaciones a la reservación
-        foreach ($habitaciones as $habitacion_id) {
-            $habitacion = Habitacion::find($habitacion_id);
-            $reservacion->habitaciones()->create([
-                'habitacion_id' => $habitacion->id,
-                'tarifa' => $habitacion->tarifa,
-            ]);
-        }
-
-        // Asignar artículos a la reservación
-        if ($articulos) {
-            foreach ($articulos as $articulo) {
-                $inventario = Inventario::find($articulo['id']);
-                $reservacion->inventarios()->create([
-                    'inventario_id' => $inventario->id_producto,
-                    'cantidad' => $articulo['cantidad'],
-                    'precio_unitario' => $inventario->precio,
-                    'subtotal' => $inventario->precio * $articulo['cantidad'],
-                ]);
-            }
-        }
-
-        return redirect()->route('reservaciones.show', $reservacion->id)->with('success', 'Reservación creada exitosamente.');
-    }
-
-    /**
-     * Mostrar una reservación específica.
-     */
-    public function show($id)
-    {
-        $reservacion = Reservacion::with(['cliente', 'hotel', 'habitaciones', 'inventarios'])->findOrFail($id);
-        return view('Modulo_Reservaciones.show', compact('reservacion'));
-    }
-
+        //trae el id del usuario loggeado
+        $clienteId = Auth::id(); 
+        $hotelId = $request->hotel_id;
     
+        // disponibilidad de habitaciones
+        $habitacionesSeleccionadas = Habitacion::whereIn('id', $request->habitaciones)
+            ->where('hotel_id', $hotelId)
+            ->where('estado', 'disponible')
+            ->get();
+    
+        if ($habitacionesSeleccionadas->count() !== count($request->habitaciones)) {
+            return back()->withErrors(['habitaciones' => 'Algunas habitaciones seleccionadas ya no están disponibles.']);
+        }
+    
+        // calcular noches 
+        $noches = now()->parse($request->fecha_entrada)->diffInDays($request->fecha_salida);
+    
+        // calcular monto total
+        $montoTotal = $habitacionesSeleccionadas->sum('tarifa') * $noches;
+    
+        // aplicar descuento si se usa un código promocional
+        $descuento = 0;
+        if ($request->codigo_promocional) {
+            $promocion = Promociones::where('codigo_promocional', $request->codigo_promocional)->first();
+            $descuento = ($promocion->descuento / 100) * $montoTotal;
+        }
+    
+        $reservacion = Reservacion::create([
+            'cliente_id' => $request->cliente_id,
+            'hotel_id' => $hotelId,
+            'fecha_entrada' => $request->fecha_entrada,
+            'fecha_salida' => $request->fecha_salida,
+            'noches' => $noches,
+            'monto_total' => $montoTotal - $descuento,
+            'codigo_promocional' => $request->codigo_promocional,
+            'descuento_aplicado' => $descuento,
+            'notas' => $request->notas,
+            'metodo_pago' => 'paypal',
+            'estado' => true,
+            'nombre' => $request->nombre,
+            'telefono' => $request->telefono,
+            'email' => $request->email,
+            'direccion' => $request->direccion,
+        ]);
+
+       
+        foreach ($habitacionesSeleccionadas as $habitacion) {
+            $reservacion->habitaciones()->attach($habitacion->id, ['tarifa' => $habitacion->tarifa]);
+        }
+    
+        // cambiar estado de las habitaciones
+        Habitacion::whereIn('id', $request->habitaciones)->update(['estado' => 'ocupada']);
+    
+        if ($request->inventario) {
+            foreach ($request->inventario as $item) {
+                $producto = Inventario::find($item['id']);
+                if ($producto->cantidad < $item['cantidad']) {
+                    return back()->withErrors(['inventario' => 'No hay suficiente stock para el producto: ' . $producto->nombre_producto]);
+                }
+                $producto->decrement('cantidad', $item['cantidad']);
+            }
+        }
+    
+        return redirect()->route('reservaciones.index')
+            ->with('success', 'Reservación creada con éxito.');
+    }
+    
+
+public function filtrarDatos(Request $request)
+{
+    $hotelId = $request->input('hotel_id');
+    $tipoHabitacionId = $request->input('tipo_habitacion_id');
+
+   
+    $habitaciones = Habitacion::where('hotel_id', $hotelId)
+        ->where('tipo_habitacion_id', $tipoHabitacionId)
+        ->where('estado', 'disponible')
+        ->get();
+
+   
+    $inventario = Inventario::where('hotel_id', $hotelId)->get();
+
+    return response()->json([
+        'habitaciones' => $habitaciones,
+        'inventario' => $inventario
+    ]);
+}
+
+public function actualizarInventario(Request $request)
+{
+    $idProducto = $request->input('id_producto');
+    $nuevaCantidad = $request->input('cantidad');
+
+    $producto = Inventario::find($idProducto);
+    if ($producto) {
+        $producto->cantidad = $nuevaCantidad;
+        $producto->save();
+
+        return response()->json(['message' => 'Cantidad actualizada correctamente']);
+    }
+
+    return response()->json(['message' => 'Producto no encontrado'], 404);
+}
+
+
+
 }

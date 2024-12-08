@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HabitacionController;
-
+use App\Http\Controllers\ReservacionesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,5 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/habitaciones-disponibles', [HabitacionController::class, 'habitacionesDisponibles'])->name('api.habitaciones.disponibles');
+Route::get('/api/habitaciones-disponibles', [ReservacionesController::class, 'habitacionesDisponibles'])->name('api.habitaciones.disponibles');
+
+
 

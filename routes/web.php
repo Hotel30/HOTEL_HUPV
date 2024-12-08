@@ -12,11 +12,14 @@ use App\Http\Controllers\ProfileController;
 use FontLib\Table\Type\name;
 use App\Http\Controllers\ReservacionesController;
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['setCurrentSection:reservaciones', 'role:2,3'])->group(function () {
     Route::get('/reservaciones/create', [ReservacionesController::class, 'create'])->name('reservaciones.create');
     Route::post('/reservaciones', [ReservacionesController::class, 'store'])->name('reservaciones.store');
     Route::get('/reservaciones/{id}', [ReservacionesController::class, 'show'])->name('reservaciones.show');
 });
+Route::get('/api/filtrar-datos', [ReservacionesController::class, 'filtrarDatos']);
+Route::post('/api/actualizar-inventario', [InventarioController::class, 'actualizarInventario']);
+
 
 
 
