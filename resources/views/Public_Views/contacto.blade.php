@@ -18,11 +18,18 @@
                 HUPV
             </div>
             <ul class="nav-links">
-                <li><a href="{{ route('index') }}">Home</a></li>
+            <li><a href="{{ route('index') }}">Home</a></li>
                 <li><a href="{{ route('hotel') }}">Hoteles</a></li>
-                <li><a href="#">Sobre nosotros</a></li>
                 <li><a href="{{ route('contacto') }}">Contacto</a></li>
                 <li><a href="{{ route('login') }}">Login</a></li>
+                <li>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                </li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </ul>
         </nav>
     </header>
