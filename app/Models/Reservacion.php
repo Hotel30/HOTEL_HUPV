@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservacion extends Model
 {
     use HasFactory;
-
+    protected $table = 'reservaciones';
     protected $fillable = [
         'cliente_id',
         'hotel_id',
@@ -18,6 +18,10 @@ class Reservacion extends Model
         'codigo_promocional',
         'descuento_aplicado',
         'notas',
+        'nombre',
+        'telefono',
+        'direccion',
+        'email',
         'metodo_pago',
         'estado',
     ];
@@ -34,7 +38,7 @@ class Reservacion extends Model
 
     public function habitaciones()
     {
-        return $this->belongsToMany(Habitacion::class, 'reservacion_habitacion','reservacion_id', 'habitacion_id')
+        return $this->belongsToMany(Habitacion::class, 'reservacion_habitaciones','reservacion_id', 'habitacion_id')
                     ->withPivot('tarifa')
                     ->withTimestamps();
     }

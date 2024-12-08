@@ -55,13 +55,14 @@ class ReservacionesController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
+        // dd(gettype($request->habitaciones));
         $validated = $request->validate([
-            'cliente_id' => 'required|exists:users,id',
+            'cliente_id' => 'nullable|exists:users,id',
             'hotel_id' => 'required|exists:hoteles,id',
             'fecha_entrada' => 'required|date|after:today',
             'fecha_salida' => 'required|date|after:fecha_entrada',
-            'habitaciones' => 'required|array',
-            'habitaciones.*' => 'exists:habitaciones,id',
+            'habitaciones' => 'required|exists:habitaciones,id', // Cambiado a una única habitación
             'inventario' => 'nullable|array',
             'inventario.*.id' => 'exists:inventario,id_producto',
             'inventario.*.cantidad' => 'required|integer|min:1',
@@ -72,20 +73,23 @@ class ReservacionesController extends Controller
             'email' => 'required|email|max:255',
             'direccion' => 'required|string|max:255',
         ]);
+        
         //trae el id del usuario loggeado
         $clienteId = Auth::id(); 
         $hotelId = $request->hotel_id;
-    
+        $habitacionId = $request->habitaciones;
+
         // disponibilidad de habitaciones
-        $habitacionesSeleccionadas = Habitacion::whereIn('id', $request->habitaciones)
+        $habitacionesSeleccionadas = Habitacion::where('id', $request->habitaciones)
             ->where('hotel_id', $hotelId)
             ->where('estado', 'disponible')
             ->get();
     
-        if ($habitacionesSeleccionadas->count() !== count($request->habitaciones)) {
-            return back()->withErrors(['habitaciones' => 'Algunas habitaciones seleccionadas ya no están disponibles.']);
-        }
-    
+        // if ($habitacionesSeleccionadas->count() !== count($request->habitaciones)) {
+        //     return back()->withErrors(['habitaciones' => 'Algunas habitaciones seleccionadas ya no están disponibles.']);
+        // }
+        // dd($habitacionId);
+
         // calcular noches 
         $noches = now()->parse($request->fecha_entrada)->diffInDays($request->fecha_salida);
     
@@ -99,8 +103,9 @@ class ReservacionesController extends Controller
             $descuento = ($promocion->descuento / 100) * $montoTotal;
         }
     
+        // dd();
         $reservacion = Reservacion::create([
-            'cliente_id' => $request->cliente_id,
+            'cliente_id' => 1,
             'hotel_id' => $hotelId,
             'fecha_entrada' => $request->fecha_entrada,
             'fecha_salida' => $request->fecha_salida,
@@ -111,7 +116,7 @@ class ReservacionesController extends Controller
             'notas' => $request->notas,
             'metodo_pago' => 'paypal',
             'estado' => true,
-            'nombre' => $request->nombre,
+            'nombre' => "mario",
             'telefono' => $request->telefono,
             'email' => $request->email,
             'direccion' => $request->direccion,
@@ -123,7 +128,7 @@ class ReservacionesController extends Controller
         }
     
         // cambiar estado de las habitaciones
-        Habitacion::whereIn('id', $request->habitaciones)->update(['estado' => 'ocupada']);
+        Habitacion::where('id', $request->habitaciones)->update(['estado' => 'ocupada']);
     
         if ($request->inventario) {
             foreach ($request->inventario as $item) {

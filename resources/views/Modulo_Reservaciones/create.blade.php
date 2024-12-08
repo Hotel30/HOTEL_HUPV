@@ -51,7 +51,7 @@
             </select>
         </div>
 
-        <select id="habitaciones">
+        <select id="habitaciones" name="habitaciones[]">
     
 </select>
 
@@ -82,10 +82,24 @@
             <textarea name="notas" id="notas" class="form-control"></textarea>
         </div>
 
-        
         <button type="submit" class="btn btn-primary">Reservar</button>
     </form>
 </div>
+
+@if ($errors->any())
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.onload = function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonText: 'Entendido'
+            });
+        };
+    </script>
+    @endif
+
 
 <script>
    
@@ -100,7 +114,7 @@ function fetchOptions() {
             const habitacionesSelect = document.getElementById('habitaciones');
             habitacionesSelect.innerHTML = '';
             data.habitaciones.forEach(habitacion => {
-                habitacionesSelect.innerHTML += `<option value="${habitacion.id}">${habitacion.numero_habitacion}</option>`;
+                habitacionesSelect.innerHTML += `<lable for="habitaciones">Numero de hab</label><option name="habitaciones" value="${habitacion.id}">${habitacion.numero_habitacion}</option>`;
             });
 
            
