@@ -22,4 +22,10 @@ class Promociones extends Model
         'restricciones',
         'activo',
     ];
+
+    public function esValida()
+    {
+        $hoy = now();
+        return $this->activo && $hoy->between($this->fecha_inicio, $this->fecha_fin);
+    }
 }

@@ -28,4 +28,9 @@ class Inventario extends Model
     {
         return $this->belongsTo(Proveedores::class, 'proveedor_id');
     }
+
+    public function reservaciones()
+    {
+        return $this->hasMany(ReservacionInventario::class, 'inventario_id');
+    }
 }

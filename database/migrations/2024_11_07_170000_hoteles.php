@@ -11,7 +11,7 @@ class Hoteles extends Migration
     {
         Schema::create('hoteles', function (Blueprint $table) {
             $table->id(); 
-            $table->string('nombre'); 
+            $table->string('nombre'); //id=1 Hotel Sol, id=2 Hotel Luna id=3 Hotel Estrella
             $table->string('direccion'); 
             $table->string('telefono'); 
             $table->timestamps(); 

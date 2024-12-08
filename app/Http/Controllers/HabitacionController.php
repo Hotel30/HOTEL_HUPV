@@ -64,4 +64,28 @@ class HabitacionController extends Controller
 
         return redirect()->route('habitaciones.index')->with('success', 'Habitación eliminada con éxito.');
     }
+
+    public function disponibles(Request $request)
+    {
+        $hotelId = $request->input('hotel_id');
+        $tipoReservacion = $request->input('tipo_reservacion');
+
+       
+        if (!$hotelId || !$tipoReservacion) {
+            return response()->json([], 400);
+        }
+
+        $habitaciones = Habitacion::where('hotel_id', $hotelId)
+            ->where('estado', 'disponible') 
+            ->when($tipoReservacion === 'individual', function ($query) {
+                $query->whereIn('tipo_habitacion_id', [1, 2]); 
+            })
+            ->when($tipoReservacion === 'grupal', function ($query) {
+                $query->whereIn('tipo_habitacion_id', [3, 4]);
+            })
+            ->get();
+
+        return response()->json($habitaciones);
+    }
+
 }
