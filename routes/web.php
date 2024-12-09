@@ -125,7 +125,11 @@ Route::get('/contact', function () {
     return view('Public_Views.contacto');
 })->name('contacto');
 
-Route::get('/habitacion', [HabitacionController::class, 'show']);
+Route::get('/habitacion', [HabitacionController::class, 'show'])->name('habitacion');
+
+Route::get('/habitacion2', [HabitacionController::class, 'show2'])->name('habitacion2');
+
+Route::get('/habitacion3', [HabitacionController::class, 'show3'])->name('habitacion3');
 
 Route::get('/hotel', function () {
     return view('Public_Views.hotel');

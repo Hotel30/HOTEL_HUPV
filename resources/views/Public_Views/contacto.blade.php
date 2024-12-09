@@ -65,7 +65,6 @@
     <div class="contact-section">
         <div class="form-section">
           <h2>Send Us an Email</h2>
-          <form action="#" method="post">
             <div class="form-row">
               <input type="text" name="first_name" placeholder="First Name *" required>
               <input type="text" name="last_name" placeholder="Last Name *" required>
@@ -75,20 +74,7 @@
               <input type="tel" name="phone" placeholder="Phone Number *" required>
             </div>
             <textarea name="message" rows="4" placeholder="Message"></textarea>
-            <button type="submit">Submit Now</button>
-          </form>
-        </div>
-        <div class="contact-info">
-          <h2>Contact Info</h2>
-          <p><i class="fa fa-map-marker"></i> St Amsterdam Finland,<br>United States of AKY16 8PN</p>
-          <p><i class="fa fa-phone"></i> 1234567890</p>
-          <p><i class="fa fa-envelope"></i> info@hotelbooking.com</p>
-          <div class="social-icons">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-google-plus"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-          </div>
+            <button type="btn">Submit Now</button>
         </div>
       </div>
       
