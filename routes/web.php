@@ -24,6 +24,7 @@ Route::middleware(['setCurrentSection:reservaciones', 'role:1,2,3'])->group(func
     Route::get('/reservaciones', [ReservacionesController::class, 'index'])->name('reservaciones.index');
 });
 Route::post('/api/actualizar-inventario', [InventarioController::class, 'actualizarInventario']);
+Route::get('/api/filtrar-datos', [ReservacionesController::class, 'filtrarDatos']);
 Route::get('/api/habitaciones-inventario', [ReservacionesController::class, 'getHabitacionesInventario']);
 
 
