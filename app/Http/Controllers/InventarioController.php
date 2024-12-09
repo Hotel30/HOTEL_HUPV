@@ -33,7 +33,21 @@ class InventarioController extends Controller
             'cantidad' => 'required|integer',
             'precio' => 'required|numeric',
             'descripcion' => 'nullable|string',
+        ], [
+            'hotel_id.required' => 'El hotel es obligatorio.',
+            'hotel_id.exists' => 'El hotel seleccionado no existe.',
+            'proveedor_id.required' => 'El proveedor es obligatorio.',
+            'proveedor_id.exists' => 'El proveedor seleccionado no existe.',
+            'nombre_producto.required' => 'El nombre del producto es obligatorio.',
+            'nombre_producto.string' => 'El nombre del producto debe ser una cadena de texto.',
+            'nombre_producto.max' => 'El nombre del producto no puede tener más de 100 caracteres.',
+            'cantidad.required' => 'La cantidad es obligatoria.',
+            'cantidad.integer' => 'La cantidad debe ser un número entero.',
+            'precio.required' => 'El precio es obligatorio.',
+            'precio.numeric' => 'El precio debe ser un valor numérico.',
+            'descripcion.string' => 'La descripción debe ser una cadena de texto.',
         ]);
+        
 
         Inventario::create($validatedData);
         return redirect()->route('inventario.index')->with('success', 'Producto creado correctamente');
@@ -61,7 +75,21 @@ class InventarioController extends Controller
             'cantidad' => 'required|integer',
             'precio' => 'required|numeric',
             'descripcion' => 'nullable|string',
+        ], [
+            'hotel_id.required' => 'El hotel es obligatorio.',
+            'hotel_id.exists' => 'El hotel seleccionado no existe.',
+            'proveedor_id.required' => 'El proveedor es obligatorio.',
+            'proveedor_id.exists' => 'El proveedor seleccionado no existe.',
+            'nombre_producto.required' => 'El nombre del producto es obligatorio.',
+            'nombre_producto.string' => 'El nombre del producto debe ser una cadena de texto.',
+            'nombre_producto.max' => 'El nombre del producto no puede tener más de 100 caracteres.',
+            'cantidad.required' => 'La cantidad es obligatoria.',
+            'cantidad.integer' => 'La cantidad debe ser un número entero.',
+            'precio.required' => 'El precio es obligatorio.',
+            'precio.numeric' => 'El precio debe ser un valor numérico.',
+            'descripcion.string' => 'La descripción debe ser una cadena de texto.',
         ]);
+        
 
         $inventario->update($validatedData);
         return redirect()->route('inventario.index')->with('success', 'Producto actualizado correctamente');
