@@ -1,4 +1,4 @@
-.main-content{
+.main-content {
     padding-bottom: 20px;
 }
 
@@ -179,4 +179,29 @@
     border-radius: 3px; /* Rounded corners */
     background-color: white; /* Background color */
     margin: 0 10px; /* Margin for spacing */
+}
+
+.title {
+    color: aqua;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 70%;
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+.section-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-container p{
+    font-size: 24px;
+}
+
+.section-title {
+    color: slateblue;
+    font-size: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
