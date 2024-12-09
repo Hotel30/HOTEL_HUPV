@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Habitacion;
 use App\Models\Hoteles;
-
+use Illuminate\Validation\Rule;
 
 class HabitacionController extends Controller
 {
@@ -23,11 +23,35 @@ class HabitacionController extends Controller
         $request->validate([
             'hotel_id' => 'required|exists:hoteles,id',
             'tipo_habitacion_id' => 'required|in:1,2,3,4,5',  
-            'numero_habitacion' => 'required|string|max:10',
+            'numero_habitacion' => [
+                'required',
+                'string',
+                'regex:/^\d{3}$/', 
+                Rule::unique('habitaciones', 'numero_habitacion')->where(function ($query) use ($request) {
+                    return $query->where('hotel_id', $request->hotel_id);
+                }),
+            ],            
             'tarifa' => 'required|numeric|min:0',
             'estado' => 'required|in:disponible,ocupada,mantenimiento',
             'piso' => 'required|in:1,2,3',
+        ], [
+            'hotel_id.required' => 'El ID del hotel es obligatorio.',
+            'hotel_id.exists' => 'El hotel seleccionado no existe.',
+            'tipo_habitacion_id.required' => 'El tipo de habitación es obligatorio.',
+            'tipo_habitacion_id.in' => 'El tipo de habitación debe ser una opción válida (1, 2, 3, 4, 5).',
+            'numero_habitacion.required' => 'El número de habitación es obligatorio.',
+            'numero_habitacion.string' => 'El número de habitación debe ser una cadena de texto.',
+            'numero_habitacion.regex' => 'El número de habitación debe tener exactamente tres dígitos (ejemplo: 001).',
+            'numero_habitacion.unique' => 'El número de habitación ya existe en este hotel.',
+            'tarifa.required' => 'La tarifa es obligatoria.',
+            'tarifa.numeric' => 'La tarifa debe ser un número.',
+            'tarifa.min' => 'La tarifa debe ser un valor positivo.',
+            'estado.required' => 'El estado de la habitación es obligatorio.',
+            'estado.in' => 'El estado de la habitación debe ser "disponible", "ocupada" o "mantenimiento".',
+            'piso.required' => 'El piso es obligatorio.',
+            'piso.in' => 'El piso debe ser 1, 2 o 3.',
         ]);
+        
 
         Habitacion::create($request->all());
 
@@ -42,22 +66,51 @@ class HabitacionController extends Controller
 
     public function update(Request $request, $id)
     {
-        
         $request->validate([
             'hotel_id' => 'required|exists:hoteles,id',
-            'tipo_habitacion_id' => 'required|in:1,2,3,4,5',  
-            'numero_habitacion' => 'required|string|max:10',
+            'tipo_habitacion_id' => 'required|in:1,2,3,4,5',
             'tarifa' => 'required|numeric|min:0',
             'estado' => 'required|in:disponible,ocupada,mantenimiento',
             'piso' => 'required|in:1,2,3',
+        ], [
+            'hotel_id.required' => 'El ID del hotel es obligatorio.',
+            'hotel_id.exists' => 'El hotel seleccionado no existe.',
+            'tipo_habitacion_id.required' => 'El tipo de habitación es obligatorio.',
+            'tipo_habitacion_id.in' => 'El tipo de habitación debe ser una opción válida (1, 2, 3, 4, 5).',
+            'tarifa.required' => 'La tarifa es obligatoria.',
+            'tarifa.numeric' => 'La tarifa debe ser un número.',
+            'tarifa.min' => 'La tarifa debe ser un valor positivo.',
+            'estado.required' => 'El estado de la habitación es obligatorio.',
+            'estado.in' => 'El estado de la habitación debe ser "disponible", "ocupada" o "mantenimiento".',
+            'piso.required' => 'El piso es obligatorio.',
+            'piso.in' => 'El piso debe ser 1, 2 o 3.',
         ]);
-
+    
+        if ($request->original_numero_habitacion != $request->numero_habitacion) {
+            $request->validate([
+                'numero_habitacion' => [
+                    'required',
+                    'string',
+                    'regex:/^\d{3}$/',
+                    Rule::unique('habitaciones', 'numero_habitacion')->where(function ($query) use ($request) {
+                        return $query->where('hotel_id', $request->hotel_id);
+                    }),
+                ]
+            ], [
+                'numero_habitacion.required' => 'El número de habitación es obligatorio.',
+                'numero_habitacion.string' => 'El número de habitación debe ser una cadena de texto.',
+                'numero_habitacion.regex' => 'El número de habitación debe tener exactamente tres dígitos (ejemplo: 001).',
+                'numero_habitacion.unique' => 'El número de habitación ya existe en este hotel.',
+            ]);
+        }
+    
         $habitacion = Habitacion::findOrFail($id);
+    
         $habitacion->update($request->all());
-
+    
         return redirect()->route('habitaciones.index')->with('success', 'Habitación actualizada con éxito.');
     }
-
+    
 
     public function destroy($id)
     {

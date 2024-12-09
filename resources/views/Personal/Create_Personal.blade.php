@@ -9,7 +9,7 @@
     <div class="main-content">
         <h2>Registro de Personal</h2>
 
-        @if ($errors->any())
+        {{-- @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -17,7 +17,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
 
         <form action="{{ route('personal.store') }}" method="POST">
             @csrf
@@ -112,4 +112,19 @@
 
         </form>
     </div>
+
+    @if ($errors->any())
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.onload = function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonText: 'Entendido'
+            });
+        };
+    </script>
+    @endif
+
 @endsection
