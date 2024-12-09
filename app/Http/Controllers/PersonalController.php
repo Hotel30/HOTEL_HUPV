@@ -26,16 +26,16 @@ class PersonalController extends Controller
     public function store(Request $request)
 {
     $validated = $request->validate([
-        'nombre' => 'required|string|max:255',
-        'puesto' => 'required|string|max:255',
-        'turno' => 'required|string|max:255',
+        'nombre' => 'required|string|max:35',
+        'puesto' => 'required|string|max:50',
+        'turno' => 'required|in:Mañana,Tarde,Noche',
         'fecha_ingreso' => 'required|date',
         'tarea_asignada' => 'required|string|max:255',
-        'hora_entrada' => 'required|string|max:5',
-        'hora_salida' => 'required|string|max:5',
-        'acceso' => 'required|string|max:255',
-        'area_asignada' => 'required|string|max:255',
-        'estado' => 'required|string|max:255',
+        'hora_entrada' => 'nullable|date_format:H:i',
+        'hora_salida' => 'nullable|date_format:H:i',
+        'acceso' => 'required|string|max:50',
+        'area_asignada' => 'required|string|max:100',
+        'estado' => 'required|in:Activo,Inactivo',
         'email' => 'required|email|unique:personal,email',
         'telefono' => 'required|string|max:15',
         'id_hotel' => 'required|exists:hoteles,id', 
@@ -75,11 +75,11 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|string|max:100',
+            'nombre' => 'required|string|max:35',
             'puesto' => 'nullable|string|max:50',
             'turno' => 'required|in:Mañana,Tarde,Noche',
             'fecha_ingreso' => 'required|date',
-            'tarea_asignada' => 'nullable|string|max:255',
+            'tarea_asignada' => 'required|string|max:255',
             'hora_entrada' => 'nullable|date_format:H:i',
             'hora_salida' => 'nullable|date_format:H:i',
             'acceso' => 'required|string|max:50',
