@@ -6,7 +6,7 @@
     <title>Hotel Booking</title>
     <link rel="stylesheet" href="{{ asset('/css/habitacion.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
+    <script src="{{ asset('/js/script.js') }}"></script>
 </head>
 <body>
     <!-- Barra de Navegación -->
@@ -24,293 +24,183 @@
                 <li><a href="#">Login</a></li>
             </ul>
         </nav>
-    </header>
-        
-
-    <!-- Encabezado Principal -->
-    <section class="hero">
-        <div class="slider">
-            <div class="slide" style="background-image: url('img/hotel.png');">
-                <h1>Experience Luxury Beyond Ordinary</h1>
-                <p>Book your dream stay today!</p>
-                <button>Explore</button>
-            </div>
-            <div class="slide" style="background-image: url('img/hotel5.jpg');">
-                <h1>Relax and Unwind</h1>
-                <p>Find your perfect getaway</p>
-                <button>Discover More</button>
-            </div>
-            <div class="slide" style="background-image: url('img/hotel3.jpg');">
-                <h1>Relax and Unwind</h1>
-                <p>Find your perfect getaway</p>
-                <button>Discover More</button>
-            </div>
-            <div class="slide" style="background-image: url('img/hotel2.jpg');">
-                <h1>Relax and Unwind</h1>
-                <p>Find your perfect getaway</p>
-                <button>Discover More</button>
-            </div>
-        </div>
-    </section>
-
-      <!-- Encabezado segundo de fechas -->  
-    <section id="booking-form">
-        <div class="booking-container">
-            <h2>BOOK YOUR ROOMS</h2>
-            <form>
-                <div class="form-group">
-                    <label for="arrival">ARRIVAL</label>
-                    <input type="date" id="arrival">
-                </div>
-                <div class="form-group">
-                    <label for="departure">DEPARTURE</label>
-                    <input type="date" id="departure">
-                </div>
-                <div class="form-group">
-                    <label for="rooms">1 ROOM</label>
-                    <select id="rooms">
-                        <option>1 Room</option>
-                        <option>2 Rooms</option>
-                        <option>3 Rooms</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="adults">1 ADULT</label>
-                    <select id="adults">
-                        <option>1 Adult</option>
-                        <option>2 Adults</option>
-                        <option>3 Adults</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="children">0 CHILD</label>
-                    <select id="children">
-                        <option>0 Child</option>
-                        <option>1 Child</option>
-                        <option>2 Children</option>
-                    </select>
-                </div>
-                <button type="submit">BOOK</button>
-            </form>
-        </div>
-    </section>
+    </header>   
 
     <!-- Sección de Habitaciones -->
     <section id="rooms" class="rooms">
         <div class="section-title">
-            <h2>Welcome to Hotel</h2>
-            <p>Semper ac dolor vitae accumsan. Cras interdum hendrerit lacinia. Phasellus accumsan urna vitae molestie interdum.</p>
+            <h2>Hotel Sol</h2>
+            <p>Al diablo lo nuestro, se acabo tu no eres mi otra mitad.</p>
         </div>
-        <div class="room-grid">
-            <!-- Habitaciones -->
+        <div class="room-booking-container">
+            <div class="room-grid">
+                <!-- Habitaciones -->
 
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h2.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
+                <div class="room">
+                    <div class="room-image" style="background-image: url('img/h2.jpg');">
                     </div>
+                    <h1 id="room-type-label" style="padding-top: 30px; font-size:32px">Seleccione un tipo</h1>
                 </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
+                                 
             </div>
-            
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h3.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
+            <div id="booking-form">
+                <div class="booking-container">
+                    <h2>Reservar Habitación</h2>
+                    <form action="{{ route('reservaciones.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="nombre">Nombre del Cliente</label>
+                                <input type="text" name="nombre" id="nombre" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" name="telefono" id="telefono" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="direccion">Dirección</label>
+                                <input type="text" name="direccion" id="direccion" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo Electrónico</label>
+                                <input type="email" name="email" id="email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="hotel_id">Hotel:</label>
+                                <select id="hotel_id" name="hotel_id" class="form-control" required>
+                                    <option value="1">Hotel Sol</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipo_habitacion_id">Tipo de Habitación:</label>
+                                <select id="tipo_habitacion_id" name="tipo_habitacion_id" class="form-control"  onchange="updateRoomTypeLabel()" required>
+                                    <option value="">Seleccione un tipo</option>
+                                    <option value="1">Individual</option>
+                                    <option value="2">Doble</option>
+                                    <option value="3">Suite</option>
+                                    <option value="4">Suite Presidencial</option>
+                                    <option value="5">Familiar</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="fecha_entrada">Fecha de Entrada</label>
+                                <input type="date" name="fecha_entrada" id="fecha_entrada" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_salida">Fecha de Salida</label>
+                                <input type="date" name="fecha_salida" id="fecha_salida" class="form-control" required>
+                            </div>
+                        </div>
+                        <div id="inventario"></div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="codigo_promocional">Cupón Promocional</label>
+                                <input type="text" name="codigo_promocional" id="codigo_promocional" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="notas">Notas</label>
+                                <textarea name="notas" id="notas" class="form-control"></textarea>
+                            </div>
+                        </div>
+                            <div class="form-group" style="width: 100%; padding-top: 30px;">
+                                <button type="submit" class="btn btn-primary btn-large" style="width: 100%; height: 50px; font-size: 32px;">Reservar</button>
+                            </div>
+                    </form>
                 </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
             </div>
-            
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-            
-    
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-            
         </div>
-</section>
+    <!-- Vincula el script aquí -->
+    @if ($errors->any())
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.onload = function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonText: 'Entendido'
+            });
+        };
+    </script>
+    @endif
+
+
+<script>
+   
+function fetchOptions() {
+    const hotelId = document.getElementById('hotel_id').value;
+    const tipoHabitacionId = document.getElementById('tipo_habitacion_id').value;
+
+    fetch(`/api/filtrar-datos?hotel_id=${hotelId}&tipo_habitacion_id=${tipoHabitacionId}`)
+        .then(response => response.json())
+        .then(data => {
+            
+            const habitacionesSelect = document.getElementById('habitaciones');
+            habitacionesSelect.innerHTML = '';
+            data.habitaciones.forEach(habitacion => {
+                habitacionesSelect.innerHTML += `<lable for="habitaciones">Numero de hab</label><option name="habitaciones" value="${habitacion.id}">${habitacion.numero_habitacion}</option>`;
+            });
+
+           
+            const inventarioDiv = document.getElementById('inventario');
+            inventarioDiv.innerHTML = '';
+            data.inventario.forEach(item => {
+                inventarioDiv.innerHTML += `
+                    <div class="form-group d-flex align-items-center">
+                        <label class="mr-3">${item.nombre_producto}</label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="updateQuantity(${item.id_producto}, -1)">-</button>
+                        <input type="number" id="cantidad_${item.id_producto}" value="0" min="0" class="form-control mx-2 text-center" style="width: 60px;" readonly>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="updateQuantity(${item.id_producto}, 1)">+</button>
+                    </div>`;
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
+        });
+}
+
+
+function updateQuantity(productId, change) {
+    const cantidadInput = document.getElementById(`cantidad_${productId}`);
+    let cantidad = parseInt(cantidadInput.value);
 
    
+    cantidad = Math.max(0, cantidad + change);
+    cantidadInput.value = cantidad;
 
-        <!-- Pie de página -->
-<footer class="footer">
-    <div class="footer-top">
-        <div class="contact-info">
-            <p>CALL US</p>
-            <span>123 456 7890</span>
-        </div>
-        <div class="contact-info">
-            <p>EMAIL US</p>
-            <span>info@HUPV.com</span>
-        </div>
-        <div class="newsletter">
-            <p>ENTER ID FOR NEWSLETTER</p>
-            <input type="text" placeholder="Your Email">
-            <button>GO</button>
-        </div>
-        <div class="social-icons">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-google"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="footer-column">
-            <h3>HUPV</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur tincidunt dolor.</p>
-            <p>St Amsterdam Finland, United States of AKY16 8PN</p>
-        </div>
-        <div class="footer-column">
-            <h3>QUICK LINKS</h3>
-            <ul>
-                <li><a href="#">Rooms</a></li>
-                <li><a href="#">Food & Drinks</a></li>
-                <li><a href="#">Beach Venues</a></li>
-                <li><a href="#">Amenities</a></li>
-                <li><a href="#">Noordwijk</a></li>
-                <li><a href="#">Wellness</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>WE ARE GLOBAL</h3>
-            <img src="img/map.jpg" alt="World Map">
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <p>&copy; 2015 HUPV. All rights reserved.</p>
-    </div>
-</footer>
+   
+    fetch(`/api/actualizar-inventario`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id_producto: productId,
+            cantidad: cantidad
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Inventario actualizado:', data);
+    })
+    .catch(error => {
+        console.error('Error al actualizar el inventario:', error);
+    });
+}
 
-
-    <!-- Vincula el script aquí -->
-    <script src="{{ asset('/js/script.js') }}"></script>
+function updateRoomTypeLabel() {
+    var select = document.getElementById("tipo_habitacion_id");
+    var label = select.options[select.selectedIndex].text;
+    document.getElementById("room-type-label").innerText = label;
+}
+</script>
 </body>
 </html>

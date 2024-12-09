@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Habitacion;
+use App\Models\Hoteles;
+
 
 class HabitacionController extends Controller
 {
@@ -86,6 +88,12 @@ class HabitacionController extends Controller
             ->get();
 
         return response()->json($habitaciones);
+    }
+
+    public function show()
+    {
+        $hoteles = Hoteles::all(); // Assuming you have a Hotel model
+        return view('Public_Views.habitacion', compact('hoteles'));
     }
 
 }

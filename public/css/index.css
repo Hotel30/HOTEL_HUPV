@@ -601,3 +601,12 @@ body {
     text-decoration: underline;
     color: #0056b3;
 }
+
+h1 #black{
+    color: black;
+}
+
+#black{
+    color: black;
+}
+

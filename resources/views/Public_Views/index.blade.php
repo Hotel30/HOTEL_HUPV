@@ -41,22 +41,18 @@
             <div class="slide" style="background-image: url('img/hotel.jpg');">
                 <h1>Experience Luxury Beyond Ordinary</h1>
                 <p>Book your dream stay today!</p>
-                <button>Explore</button>
             </div>
             <div class="slide" style="background-image: url('img/hotel5.jpg');">
-                <h1>Relax and Unwind</h1>
-                <p>Find your perfect getaway</p>
-                <button>Discover More</button>
+                <h1 id="black">Relax and Unwind</h1>
+                <p id="black">Find your perfect getaway</p>
             </div>
             <div class="slide" style="background-image: url('img/hotel3.jpg');">
                 <h1>Relax and Unwind</h1>
                 <p>Find your perfect getaway</p>
-                <button>Discover More</button>
             </div>
             <div class="slide" style="background-image: url('img/hotel2.jpg');">
                 <h1>Relax and Unwind</h1>
                 <p>Find your perfect getaway</p>
-                <button>Discover More</button>
             </div>
         </div>
     </section>
@@ -65,52 +61,14 @@
 
        
     <section id="booking-form">
-        <div class="booking-container">
-            <h2>BOOK YOUR ROOMS</h2>
-            <form>
-                <div class="form-group">
-                    <label for="arrival">ARRIVAL</label>
-                    <input type="date" id="arrival">
-                </div>
-                <div class="form-group">
-                    <label for="departure">DEPARTURE</label>
-                    <input type="date" id="departure">
-                </div>
-                <div class="form-group">
-                    <label for="rooms">1 ROOM</label>
-                    <select id="rooms">
-                        <option>1 Room</option>
-                        <option>2 Rooms</option>
-                        <option>3 Rooms</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="adults">1 ADULT</label>
-                    <select id="adults">
-                        <option>1 Adult</option>
-                        <option>2 Adults</option>
-                        <option>3 Adults</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="children">0 CHILD</label>
-                    <select id="children">
-                        <option>0 Child</option>
-                        <option>1 Child</option>
-                        <option>2 Children</option>
-                    </select>
-                </div>
-                <button type="submit">BOOK</button>
-            </form>
-        </div>
     </section>
     
   <!-- Sección de ofertas -->
   <section class="hero">
     <div class="hero-content">
-        <h1>Ahorra 30% o más con los Precios para socios. Reserva antes del 4 dic.</h1>
-        <p>Ofertas para estas fechas: <strong>del 10 ene. al 12 ene.</strong></p>
-        <button class="btn">Ver todas las ofertas</button>
+        <h1>Deja de Trabajar en Laravel y Ven a Vacacionar</h1>
+        <p>No a los cuatris: <strong>de 3 meses</strong></p>
+        <button class="btn">Reserva Ahora</button>
     </div>
 </section>
 <section class="hotels">
@@ -155,70 +113,7 @@
         <button class="btn">Accede a un Precio para socios</button>
     </div>
 </section>
-    <!-- Sección de Habitaciones -->
-    <section id="rooms" class="rooms">
-        <div class="section-title">
-            <h2>Welcome to Hotel</h2>
-            <p>Semper ac dolor vitae accumsan. Cras interdum hendrerit lacinia. Phasellus accumsan urna vitae molestie interdum.</p>
-        </div>
-        <div class="room-grid">
-            <!-- Habitaciones -->
-
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h2.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-            
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h3.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-            
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-            
     
-            <div class="room">
-                <div class="room-image" style="background-image: url('img/h4.jpg');">
-                    <div class="room-hover-info">
-                        <h3>Double Room</h3>
-                        <p>Comfortable room with two double beds, perfect for families.</p>
-                        <p class="price">$150 / night</p>
-                    </div>
-                </div>
-                <h3>Double Room</h3>
-                <p class="price">$150 / night</p>
-                <button>Book</button>
-            </div>
-            
-        </div>
-</section>
 
     <!-- Sección de informacion -->
         <section id="facilities" class="facilities-section">
@@ -239,9 +134,9 @@
                     <div class="text-content">
                         <h3>Vision</h3>
                         <p>
-                            Semper ac dolor vitae accumsan. Cras interdum hendrerit lacinia.
-                            <br>Service Hours: 19:00-22:00
-                            <br>Service Charge: $15
+                            Ojala y Osiel algun dia aprendan a usar git
+                            <br>Y ya no me borren los archivos de diseño
+                            <br>32% ChatGPT
                         </p>
                     </div>
                 </div>
@@ -251,9 +146,9 @@
                     <div class="text-content">
                         <h3>Sobre Nosotros</h3>
                         <p>
-                            Enjoy state-of-the-art facilities at our sports club.
-                            <br>Service Hours: 06:00-22:00
-                            <br>Membership Fee: $50/month
+                            Erick Mata Vera loves to play football
+                            <br>Pero la verdad ni la arma
+                            <br>Att: Dr. Investigador Privado
                         </p>
                     </div>
                 </div>
@@ -263,9 +158,9 @@
                     <div class="text-content">
                         <h3>Mision</h3>
                         <p>
-                            Semper ac dolor vitae accumsan. Cras interdum hendrerit lacinia.
-                            <br>Service Hours: 19:00-22:00
-                            <br>Service Charge: $15
+                            Si leen esto ya fue demasiada la revision
+                            <br>Porfa profe no me baje puntos
+                            <br>Att: Hotel HUPV
                         </p>
                     </div>
                 </div>

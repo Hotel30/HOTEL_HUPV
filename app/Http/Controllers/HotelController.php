@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Hotel;
+use App\Models\Hoteles;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
     public function index()
     {
-        $hoteles = Hotel::all();
+        $hoteles = Hoteles::all();
         return view('hoteles.index', compact('hoteles'));
     }
 
@@ -27,20 +27,20 @@ class HotelController extends Controller
             'telefono' => 'nullable|string|max:20',
         ]);
 
-        Hotel::create($request->all());
+        Hoteles::create($request->all());
 
         return redirect()->route('hoteles.index')->with('success', 'Hotel creado exitosamente.');
     }
 
     public function show($id)
     {
-        $hotel = Hotel::findOrFail($id);
+        $hotel = Hoteles::findOrFail($id);
         return view('hoteles.show', compact('hotel'));
     }
 
     public function edit($id)
     {
-        $hotel = Hotel::findOrFail($id);
+        $hotel = Hoteles::findOrFail($id);
         return view('hoteles.edit', compact('hotel'));
     }
 
@@ -54,7 +54,7 @@ class HotelController extends Controller
             'telefono' => 'nullable|string|max:20',
         ]);
 
-        $hotel = Hotel::findOrFail($id);
+        $hotel = Hoteles::findOrFail($id);
         $hotel->update($request->all());
 
         return redirect()->route('hoteles.index')->with('success', 'Hotel actualizado exitosamente.');
@@ -62,7 +62,7 @@ class HotelController extends Controller
 
     public function destroy($id)
     {
-        $hotel = Hotel::findOrFail($id);
+        $hotel = Hoteles::findOrFail($id);
         $hotel->delete();
 
         return redirect()->route('hoteles.index')->with('success', 'Hotel eliminado exitosamente.');
