@@ -147,10 +147,10 @@
                                 Hotel Sol
                                 @break
                             @case(2)
-                                Hotel Luna
+                                Hotel Mar
                                 @break
                             @case(3)
-                                Hotel Estrella
+                                Hotel Luna
                                 @break
                             @default
                                 Hotel Desconocido

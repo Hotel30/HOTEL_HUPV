@@ -13,7 +13,7 @@ use App\Http\Controllers\OrdenCompraController;
 use FontLib\Table\Type\name;
 use App\Http\Controllers\ReservacionesController;
 
-Route::middleware(['setCurrentSection:reservaciones', 'role:2,3'])->group(function () {
+Route::middleware(['setCurrentSection:reservaciones', 'role:1,2,3'])->group(function () {
     Route::get('/reservaciones/create', [ReservacionesController::class, 'create'])->name('reservaciones.create');
     Route::post('/reservaciones', [ReservacionesController::class, 'store'])->name('reservaciones.store');
     Route::post('/reservaciones2', [ReservacionesController::class, 'store2'])->name('reservaciones.store2');

@@ -105,7 +105,7 @@ class ReservacionesController extends Controller
     
         // dd();
         $reservacion = Reservacion::create([
-            'cliente_id' => 1,
+            'cliente_id' => $clienteId,
             'hotel_id' => $hotelId,
             'fecha_entrada' => $request->fecha_entrada,
             'fecha_salida' => $request->fecha_salida,
@@ -116,7 +116,7 @@ class ReservacionesController extends Controller
             'notas' => $request->notas,
             'metodo_pago' => 'paypal',
             'estado' => true,
-            'nombre' => "mario",
+            'nombre' => $request->nombre,
             'telefono' => $request->telefono,
             'email' => $request->email,
             'direccion' => $request->direccion,
@@ -196,7 +196,7 @@ class ReservacionesController extends Controller
     
         // dd();
         $reservacion = Reservacion::create([
-            'cliente_id' => 1,
+            'cliente_id' => $clienteId,
             'hotel_id' => $hotelId,
             'fecha_entrada' => $request->fecha_entrada,
             'fecha_salida' => $request->fecha_salida,
@@ -207,7 +207,7 @@ class ReservacionesController extends Controller
             'notas' => $request->notas,
             'metodo_pago' => 'paypal',
             'estado' => true,
-            'nombre' => "mario",
+            'nombre' => $request->nombre,
             'telefono' => $request->telefono,
             'email' => $request->email,
             'direccion' => $request->direccion,
