@@ -18,6 +18,10 @@ Route::middleware(['setCurrentSection:reservaciones', 'role:1,2,3'])->group(func
     Route::post('/reservaciones', [ReservacionesController::class, 'store'])->name('reservaciones.store');
     Route::post('/reservaciones2', [ReservacionesController::class, 'store2'])->name('reservaciones.store2');
     Route::get('/reservaciones/{id}', [ReservacionesController::class, 'show'])->name('reservaciones.show');
+    Route::get('/reservaciones/{id}/edit', [ReservacionesController::class, 'edit'])->name('reservaciones.edit');
+    Route::put('/reservaciones/{id}', [ReservacionesController::class, 'update'])->name('reservaciones.update');
+    Route::delete('/reservaciones/{id}', [ReservacionesController::class, 'destroy'])->name('reservaciones.destroy');
+    Route::get('/reservaciones', [ReservacionesController::class, 'index'])->name('reservaciones.index');
 });
 Route::post('/api/actualizar-inventario', [InventarioController::class, 'actualizarInventario']);
 Route::get('/api/habitaciones-inventario', [ReservacionesController::class, 'getHabitacionesInventario']);
