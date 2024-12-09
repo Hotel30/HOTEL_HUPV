@@ -9,9 +9,6 @@
     <main class="table" id="promotions_table">
         <section class="table__header">
             <h1>Promociones</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Buscar Promoción...">
-            </div>
             <div class="top-bar">
                 <a href="{{ route('promociones.create') }}" class="edit-button">Añadir Promoción</a>
             </div>

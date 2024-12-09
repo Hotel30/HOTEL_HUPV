@@ -9,15 +9,11 @@
     <main class="table" id="personal_table">
         <section class="table__header">
             <h1>Lista de Personal</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Buscar...">
+            <div class="top-bar">
+                <a href="{{ route('pedro') }}" class="delete-button">Generar Reporte</a>
             </div>
             <div class="top-bar">
                 <a href="{{ route('personal.create') }}" class="edit-button">Añadir Personal</a>
-            </div>
-
-            <div class="top-bar">
-                <a href="{{ route('pedro') }}" class="delete-button">Generar Reporte</a>
             </div>
             
         </section>

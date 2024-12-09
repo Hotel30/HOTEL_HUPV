@@ -9,18 +9,12 @@
     <main class="table" id="customers_table">
         <section class="table__header">
             <h1>Inventario</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Buscar...">
-            </div>
-
-            <div class="top-bar">
-                <a href="{{ route('inventario.create') }}" class="edit-button">Añadir Item</a>
-            </div>
-
             <div class="top-bar">
                 <a href="{{ route('pdf') }}" class="delete-button">Generar Reporte</a>
             </div>
-            
+            <div class="top-bar">
+                <a href="{{ route('inventario.create') }}" class="edit-button">Añadir Item</a>
+            </div>            
         </section>
         <section class="table__body">
             <table>

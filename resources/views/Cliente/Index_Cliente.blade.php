@@ -9,9 +9,6 @@
     <main class="table" id="customers_table"> 
         <section class="table__header">
             <h1>Clientes</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Search Data...">
-            </div>
             <div class="top-bar">
                 <a href="{{ route('clientes.create') }}" class="edit-button">Añadir Cliente</a>
             </div>

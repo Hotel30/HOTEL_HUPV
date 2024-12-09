@@ -55,14 +55,5 @@
             </table>
         </section>
     </main>
-    <div class="action-buttons" id="profile">
-        <div class="top-bar">
-            <a href="#" class="edit-button">Editar Informacion</a>
-        </div>
-
-        <div class="top-bar">
-            <a href="#" class="delete-button">Cambiar Contraseña</a>
-        </div>
-    </div>
 </div>
 @endsection

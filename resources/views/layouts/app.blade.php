@@ -39,10 +39,6 @@
                     <span>Personal</span>
                 </div>
             </a>
-            <div class="menu-item {{ $currentSection == 'facturas' ? 'active' : '' }}">
-                <img src="{{ asset('img/facturas.svg') }}" alt="Facturas" class="facturas-image">
-                <span>Facturas</span>
-            </div>
             <a href="{{ route('promociones.index') }}">
                 <div class="menu-item {{ $currentSection == 'marketing' ? 'active' : '' }}">
                     <img src="{{ asset('img/marketing.svg') }}" alt="Marketing" class="marketing-image">
