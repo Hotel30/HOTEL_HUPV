@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('/css/habitacion.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="{{ asset('/js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <!-- Barra de Navegación -->
@@ -46,7 +47,7 @@
             <div id="booking-form">
                 <div class="booking-container">
                     <h2>Reservar Habitación</h2>
-                    <form action="{{ route('reservaciones.store') }}" method="POST">
+                    <form action="{{ route('reservaciones.store2') }}" method="POST" onsubmit="handleFormSubmit(event)">
                         @csrf
                         <div class="form-group-row">
                             <div class="form-group">
@@ -100,6 +101,7 @@
                             </div>
                         </div>
                         <div id="inventario"></div>
+                        <div id="habitaciones"></div>
                         <div class="form-group-row">
                             <div class="form-group">
                                 <label for="codigo_promocional">Cupón Promocional</label>
@@ -142,14 +144,16 @@ function fetchOptions() {
     fetch(`/api/filtrar-datos?hotel_id=${hotelId}&tipo_habitacion_id=${tipoHabitacionId}`)
         .then(response => response.json())
         .then(data => {
-            
             const habitacionesSelect = document.getElementById('habitaciones');
             habitacionesSelect.innerHTML = '';
-            data.habitaciones.forEach(habitacion => {
-                habitacionesSelect.innerHTML += `<lable for="habitaciones">Numero de hab</label><option name="habitaciones" value="${habitacion.id}">${habitacion.numero_habitacion}</option>`;
-            });
+            if (data.habitaciones.length === 0) {
+                habitacionesSelect.innerHTML = '<option value="">No hay habitaciones disponibles</option>';
+            } else {
+                data.habitaciones.forEach(habitacion => {
+                    habitacionesSelect.innerHTML += `<option value="${habitacion.id}">${habitacion.numero_habitacion}</option>`;
+                });
+            }
 
-           
             const inventarioDiv = document.getElementById('inventario');
             inventarioDiv.innerHTML = '';
             data.inventario.forEach(item => {
@@ -200,6 +204,75 @@ function updateRoomTypeLabel() {
     var select = document.getElementById("tipo_habitacion_id");
     var label = select.options[select.selectedIndex].text;
     document.getElementById("room-type-label").innerText = label;
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const hotelId = document.getElementById('hotel_id').value;
+    const tipoHabitacionId = document.getElementById('tipo_habitacion_id').value;
+
+    fetch(`/api/habitaciones-inventario?hotel_id=${hotelId}&tipo_habitacion_id=${tipoHabitacionId}`)
+        .then(response => response.json())
+        .then(data => {
+            const inventarioDiv = document.getElementById('inventario');
+            inventarioDiv.innerHTML = '';
+            data.inventario.forEach(item => {
+                inventarioDiv.innerHTML += `<input type="hidden" name="inventario[${item.id_producto}][id]" value="${item.id_producto}">`;
+                inventarioDiv.innerHTML += `<input type="hidden" name="inventario[${item.id_producto}][cantidad]" value="1">`;
+            });
+
+            const habitacionesDiv = document.getElementById('habitaciones');
+            habitacionesDiv.innerHTML = '';
+            if (data.habitaciones.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No hay habitaciones disponibles para el tipo seleccionado.',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+            data.habitaciones.forEach(habitacion => {
+                habitacionesDiv.innerHTML += `<input type="hidden" name="habitaciones[]" value="${habitacion.id}">`;
+            });
+
+            // Submit the form data using fetch
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: data.success,
+                        confirmButtonText: 'Entendido'
+                    });
+                } else if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error,
+                        confirmButtonText: 'Entendido'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error al enviar el formulario:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al enviar el formulario. Por favor, inténtelo de nuevo.',
+                    confirmButtonText: 'Entendido'
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
+        });
 }
 </script>
 </body>
