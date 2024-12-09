@@ -15,7 +15,7 @@
             </div>
         </a>
         <div class="menu-items">
-        <a href="{{ route('reservaciones.create') }}">
+        <a href="{{ route('reservaciones.index') }}">
             <div class="menu-item {{ $currentSection == 'reservaciones' ? 'active' : '' }}">
                 <img src="{{ asset('img/reservaciones.svg') }}" alt="Reservaciones" class="reservaciones-image">
                 <span>Reservaciones</span>

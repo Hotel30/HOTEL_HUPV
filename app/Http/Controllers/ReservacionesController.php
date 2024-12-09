@@ -116,7 +116,7 @@ class ReservacionesController extends Controller
             'notas' => $request->notas,
             'metodo_pago' => 'paypal',
             'estado' => true,
-            'nombre' => "mario",
+            'nombre' => $request->nombre,
             'telefono' => $request->telefono,
             'email' => $request->email,
             'direccion' => $request->direccion,
@@ -181,6 +181,109 @@ public function actualizarInventario(Request $request)
     return response()->json(['message' => 'Producto no encontrado'], 404);
 }
 
+
+public function index()
+{
+    $reservaciones = Reservacion::with(['habitaciones', 'cliente', 'hotel'])->get();
+
+    return view('Modulo_Reservaciones.index', compact('reservaciones'));
+}
+
+
+public function edit($id)
+{
+    $reservacion = Reservacion::with(['habitaciones'])->findOrFail($id);
+
+    $hoteles = Hoteles::all();
+
+    $promociones = Promociones::where('activo', true)
+        ->whereDate('fecha_inicio', '<=', now())
+        ->whereDate('fecha_fin', '>=', now())
+        ->get();
+
+    $habitaciones = $reservacion->habitaciones;
+
+    return view('Modulo_Reservaciones.edit', compact('reservacion', 'hoteles', 'promociones', 'habitaciones'));
+}
+
+public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'cliente_id' => 'nullable|exists:users,id',
+        'hotel_id' => 'required|exists:hoteles,id',
+        'fecha_entrada' => 'required|date|after:today',
+        'fecha_salida' => 'required|date|after:fecha_entrada',
+        'habitaciones' => 'required|exists:habitaciones,id',
+        'codigo_promocional' => 'nullable|exists:promociones,codigo_promocional',
+        'notas' => 'nullable|string',
+        'nombre' => 'required|string|max:255',
+        'telefono' => 'required|string|max:20',
+        'email' => 'required|email|max:255',
+        'direccion' => 'required|string|max:255',
+    ]);
+
+    $reservacion = Reservacion::findOrFail($id);
+    $habitacionActual = $reservacion->habitaciones()->pluck('id');
+
+   
+    if ($request->habitaciones != $habitacionActual) {
+        Habitacion::whereIn('id', $habitacionActual)->update(['estado' => 'disponible']);
+        Habitacion::where('id', $request->habitaciones)->update(['estado' => 'ocupada']);
+    }
+
+    $noches = now()->parse($request->fecha_entrada)->diffInDays($request->fecha_salida);
+    $habitacionesSeleccionadas = Habitacion::where('id', $request->habitaciones)->get();
+    $montoTotal = $habitacionesSeleccionadas->sum('tarifa') * $noches;
+
+    $descuento = 0;
+    if ($request->codigo_promocional) {
+        $promocion = Promociones::where('codigo_promocional', $request->codigo_promocional)->first();
+        $descuento = ($promocion->descuento / 100) * $montoTotal;
+    }
+
+    $reservacion->update([
+        'cliente_id' => $request->cliente_id,
+        'hotel_id' => $request->hotel_id,
+        'fecha_entrada' => $request->fecha_entrada,
+        'fecha_salida' => $request->fecha_salida,
+        'noches' => $noches,
+        'monto_total' => $montoTotal - $descuento,
+        'codigo_promocional' => $request->codigo_promocional,
+        'descuento_aplicado' => $descuento,
+        'notas' => $request->notas,
+        'nombre' => $request->nombre,
+        'telefono' => $request->telefono,
+        'email' => $request->email,
+        'direccion' => $request->direccion,
+    ]);
+
+    return redirect()->route('reservaciones.index')->with('success', 'Reservación actualizada con éxito.');
+}
+
+
+public function show($id)
+{
+    
+    $reservacion = Reservacion::with([
+        'habitaciones', 
+        'cliente', 
+        'hotel', 
+    ])->find($id);
+
+    if (!$reservacion) {
+        return redirect()->route('reservaciones.index')->with('error', 'Reservación no encontrada.');
+    }
+    return view('Modulo_Reservaciones.show', compact('reservacion'));
+}
+
+
+
+public function destroy($id)
+{
+    $reservacion = Reservacion::findOrFail($id);
+    $reservacion->delete();
+    return redirect()->route('reservaciones.index')->with('success', 'La reservación ha sido eliminada correctamente.');
+}
 
 
 }

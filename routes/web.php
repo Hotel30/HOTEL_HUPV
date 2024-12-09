@@ -13,10 +13,15 @@ use App\Http\Controllers\OrdenCompraController;
 use FontLib\Table\Type\name;
 use App\Http\Controllers\ReservacionesController;
 
-Route::middleware(['setCurrentSection:reservaciones', 'role:2,3'])->group(function () {
+
+Route::middleware(['setCurrentSection:reservaciones', 'role:1,2,3'])->group(function () {
     Route::get('/reservaciones/create', [ReservacionesController::class, 'create'])->name('reservaciones.create');
     Route::post('/reservaciones', [ReservacionesController::class, 'store'])->name('reservaciones.store');
     Route::get('/reservaciones/{id}', [ReservacionesController::class, 'show'])->name('reservaciones.show');
+    Route::get('/reservaciones/{id}/edit', [ReservacionesController::class, 'edit'])->name('reservaciones.edit');
+    Route::put('/reservaciones/{id}', [ReservacionesController::class, 'update'])->name('reservaciones.update');
+    Route::delete('/reservaciones/{id}', [ReservacionesController::class, 'destroy'])->name('reservaciones.destroy');
+    Route::get('/reservaciones', [ReservacionesController::class, 'index'])->name('reservaciones.index');
 });
 Route::get('/api/filtrar-datos', [ReservacionesController::class, 'filtrarDatos']);
 Route::post('/api/actualizar-inventario', [InventarioController::class, 'actualizarInventario']);
