@@ -272,18 +272,18 @@ public function updatePersonal(Request $request, $id)
 
   
     $validatedData = $request->validate([
-        'nombre' => 'required|string|max:35', // Longitud ajustada
-        'apellidos' => 'required|string|max:55', // Longitud ajustada
+        'nombre' => 'required|string|max:35', 
+        'apellidos' => 'required|string|max:55', 
         'email' => 'required|string|email|max:255|unique:users,email,' . $trabajador->id,
         'telefono' => 'nullable|string|max:15',
         'direccion' => 'nullable|string|max:255',
         'rol' => 'required|in:2,3', 
-        'puesto' => 'required|string|max:100', // Campo obligatorio con longitud ajustada
-        'turno' => 'required|string|max:50', // Campo obligatorio con longitud ajustada
-        'hora_entrada' => 'required|date_format:H:i', // Ahora es obligatorio
-        'hora_salida' => 'required|date_format:H:i|after:hora_entrada', // Ahora es obligatorio
-        'fecha_ingreso' => 'required|date', // Ahora es obligatorio
-        'area_asignada' => 'required|string|max:100', // Campo obligatorio con longitud ajustada
+        'puesto' => 'required|string|max:100', 
+        'turno' => 'required|string|max:50', 
+        'hora_entrada' => 'required|date_format:H:i', 
+        'hora_salida' => 'required|date_format:H:i|after:hora_entrada', 
+        'fecha_ingreso' => 'required|date', 
+        'area_asignada' => 'required|string|max:100', 
         'tarea_asignada' => 'nullable|string|max:255',
         'estado' => 'required|boolean', 
         'id_hotel' => 'required|exists:hoteles,id',

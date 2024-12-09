@@ -61,4 +61,19 @@
 
     </form>
 </div>
+
+@if ($errors->any())
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    window.onload = function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonText: 'Entendido'
+        });
+    };
+</script>
+@endif
+
 @endsection

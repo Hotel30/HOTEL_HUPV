@@ -32,6 +32,7 @@
         <div class="input-group">
             <label for="numero_habitacion">Número de Habitación</label>
             <input type="text" name="numero_habitacion" class="form-control" value="{{ $habitacion->numero_habitacion }}" required>
+            <input type="hidden" name="original_numero_habitacion" value="{{ $habitacion->numero_habitacion }}">
         </div>
         <div class="input-group">
             <label for="tarifa">Tarifa</label>
@@ -61,4 +62,19 @@
 
     </form>
 </div>
+
+@if ($errors->any())
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    window.onload = function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonText: 'Entendido'
+        });
+    };
+</script>
+@endif
+
 @endsection
