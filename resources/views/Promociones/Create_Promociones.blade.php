@@ -28,7 +28,7 @@
                 <option value="Descuento" {{ old('tipo') == 'Descuento' ? 'selected' : '' }}>Descuento</option>
                 <option value="2x1" {{ old('tipo') == '2x1' ? 'selected' : '' }}>2x1</option>
                 <option value="Cashback" {{ old('tipo') == 'Cashback' ? 'selected' : '' }}>Cashback</option>
-                <option value="Envío gratis" {{ old('tipo') == 'Envío gratis' ? 'selected' : '' }}>Envío gratis</option>
+                {{-- <option value="Envío gratis" {{ old('tipo') == 'Envío gratis' ? 'selected' : '' }}>Envío gratis</option> --}}
                 <option value="Otro" {{ old('tipo') == 'Otro' ? 'selected' : '' }}>Otro</option>
             </select>
         </div>
