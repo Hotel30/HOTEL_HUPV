@@ -9,9 +9,7 @@
     <main class="table" id="reservaciones_table">
         <section class="table__header">
             <h1>Lista de Reservaciones</h1>
-            <div class="input-group">
-                {{-- <input type="search" placeholder="Buscar..."> --}}
-            </div>
+           
             <div class="top-bar">
                 <a href="{{ route('reservaciones.create') }}" class="edit-button">Añadir Reservación</a>
             </div>
