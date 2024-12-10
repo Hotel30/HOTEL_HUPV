@@ -144,9 +144,9 @@
                     <div class="text-content">
                         <h3>Vision</h3>
                         <p>
-                            Ojala y Osiel algun dia aprendan a usar git
-                            <br>Y ya no me borren los archivos de diseño
-                            <br>32% ChatGPT
+                            Ser reconocidos como el hotel líder en hospitalidad y excelencia.
+                            <br>Proveer experiencias únicas que superen las expectativas de nuestros huéspedes.
+                            <br>Compromiso con la innovación y sostenibilidad.
                         </p>
                     </div>
                 </div>
@@ -156,9 +156,9 @@
                     <div class="text-content">
                         <h3>Sobre Nosotros</h3>
                         <p>
-                            Erick Mata Vera loves to play football
-                            <br>Pero la verdad ni la arma
-                            <br>Att: Dr. Investigador Privado
+                            Ofrecer servicios de alta calidad que combinen comodidad y estilo.
+                            <br>Cuidar cada aspecto de la estadía de nuestros huéspedes.
+                            <br>Convertirnos en el lugar predilecto para descansar y crear recuerdos.
                         </p>
                     </div>
                 </div>
@@ -168,12 +168,13 @@
                     <div class="text-content">
                         <h3>Mision</h3>
                         <p>
-                            Si leen esto ya fue demasiada la revision
-                            <br>Porfa profe no me baje puntos
-                            <br>Att: Hotel HUPV
+                            Ofrecer servicios de alta calidad que combinen comodidad y estilo.
+                            <br>Cuidar cada aspecto de la estadía de nuestros huéspedes.
+                            <br>Convertirnos en el lugar predilecto para descansar y crear recuerdos.
                         </p>
                     </div>
                 </div>
+                
             </div>
         </section>
 

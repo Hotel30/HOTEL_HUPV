@@ -38,7 +38,6 @@
     <section id="rooms" class="rooms">
         <div class="section-title">
             <h2>Hotel Sol</h2>
-            <p>Al diablo lo nuestro, se acabo tu no eres mi otra mitad.</p>
         </div>
         <div class="room-booking-container">
             <div class="room-grid">

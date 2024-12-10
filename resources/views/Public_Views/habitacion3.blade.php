@@ -38,7 +38,6 @@
     <section id="rooms" class="rooms">
         <div class="section-title">
             <h2>Hotel Luna</h2>
-            <p>Tonto el que no entienda...</p>
         </div>
         <div class="room-booking-container">
             <div class="room-grid">

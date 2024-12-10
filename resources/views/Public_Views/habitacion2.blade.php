@@ -38,7 +38,6 @@
     <section id="rooms" class="rooms">
         <div class="section-title">
             <h2>Hotel Mar</h2>
-            <p>Aqui en la playaaaaaa.</p>
         </div>
         <div class="room-booking-container">
             <div class="room-grid">
