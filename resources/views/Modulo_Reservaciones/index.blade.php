@@ -45,8 +45,7 @@
                             <td>{{ ucfirst($reservacion->metodo_pago) }}</td>
                             <td>
                                 <div class="action-buttons">
-                                <a href="{{ route('reservaciones.show', $reservacion->id) }}" class="edit-button">Ver detalles</a>
-                                    <a href="{{ route('reservaciones.edit', $reservacion->id) }}" class="edit-button">Editar</a>
+                                    <a href="{{ route('reservaciones.show', $reservacion->id) }}" class="edit-button">Ver detalles</a>
                                     <form action="{{ route('reservaciones.destroy', $reservacion->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
