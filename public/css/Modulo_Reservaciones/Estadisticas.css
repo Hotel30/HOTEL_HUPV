@@ -1,0 +1,53 @@
+.main-content {
+  padding: 30px;
+}
+
+.top-charts {
+display: flex;
+justify-content: space-between;
+gap: 20px;
+margin-top: 20px;
+}
+
+.chart-container {
+background: #202020;
+padding: 20px;
+border-radius: 10px;
+width: 100%;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chart-container h4 {
+color: #FFF;
+text-align: center;
+margin-bottom: 15px;
+}
+
+.circle-chart {
+width: 150px;
+height: 150px;
+border-radius: 50%;
+background: #202020;
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+}
+
+.circle-chart:before {
+content: '';
+position: absolute;
+width: 60%;
+height: 60%;
+background-color: white;
+border-radius: 50%;
+z-index: 2;
+}
+
+.circle-chart span {
+position: absolute;
+font-size: 24px;
+color: white;
+z-index: 3;
+}
