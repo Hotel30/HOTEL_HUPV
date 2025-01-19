@@ -15,7 +15,7 @@
             </div>
         </a>
         <div class="menu-items">
-        <a href="{{ route('reservaciones.index') }}">
+        <a href="{{ route('reservaciones.create') }}">
             <div class="menu-item {{ $currentSection == 'reservaciones' ? 'active' : '' }}">
                 <img src="{{ asset('img/reservaciones.svg') }}" alt="Reservaciones" class="reservaciones-image">
                 <span>Reservaciones</span>
@@ -39,6 +39,10 @@
                     <span>Personal</span>
                 </div>
             </a>
+            <div class="menu-item {{ $currentSection == 'facturas' ? 'active' : '' }}">
+                <img src="{{ asset('img/facturas.svg') }}" alt="Facturas" class="facturas-image">
+                <span>Facturas</span>
+            </div>
             <a href="{{ route('promociones.index') }}">
                 <div class="menu-item {{ $currentSection == 'marketing' ? 'active' : '' }}">
                     <img src="{{ asset('img/marketing.svg') }}" alt="Marketing" class="marketing-image">

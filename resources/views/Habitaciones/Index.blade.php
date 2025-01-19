@@ -9,9 +9,12 @@
     <main class="table" id="habitacion_table">
         <section class="table__header">
             <h1>Lista de Habitaciones</h1>
-            <div class="top-bar">
-                <a href="{{ route('estadisticas.habitaciones') }}" class="decrement-button">Ver Estadísticas</a>
-            </div>   
+            <div class="input-group">
+                <input type="search" placeholder="Buscar...">
+            </div>
+            <a href="{{ route('estadisticas.habitaciones') }}" class="btn-estadisticas">
+                    <i class="fas fa-chart-line"></i> Ver Estadísticas
+                </a>
             <div class="top-bar">
                 <a href="{{ route('habitaciones.create') }}" class="edit-button">Nueva Habitación</a>
             </div>

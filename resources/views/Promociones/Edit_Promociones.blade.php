@@ -29,7 +29,7 @@
                 <option value="Descuento" {{ $promocion->tipo == 'descuento' ? 'selected' : '' }}>Descuento</option>
                 <option value="2x1" {{ $promocion->tipo == '2x1' ? 'selected' : '' }}>2x1</option>
                 <option value="Cashback" {{ $promocion->tipo == 'cashback' ? 'selected' : '' }}>Cashback</option>
-                {{-- <option value="Envío gratis" {{ $promocion->tipo == 'envío gratis' ? 'selected' : '' }}>Envío gratis</option> --}}
+                <option value="Envío gratis" {{ $promocion->tipo == 'envío gratis' ? 'selected' : '' }}>Envío gratis</option>
                 <option value="Otro" {{ $promocion->tipo == 'Otro' ? 'selected' : '' }}>Otro</option>
             </select>
         </div>

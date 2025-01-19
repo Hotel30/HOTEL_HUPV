@@ -9,7 +9,9 @@
     <main class="table" id="reservaciones_table">
         <section class="table__header">
             <h1>Lista de Reservaciones</h1>
-           
+            <div class="input-group">
+                <input type="search" placeholder="Buscar...">
+            </div>
             <div class="top-bar">
                 <a href="{{ route('reservaciones.create') }}" class="edit-button">Añadir Reservación</a>
             </div>
@@ -25,6 +27,7 @@
                         <th>Teléfono</th>
                         <th>Fecha Entrada</th>
                         <th>Fecha Salida</th>
+                        <th>Tipo</th>
                         <th>Monto Total</th>
                         <th>Método Pago</th>
                         <th>Acciones</th>
@@ -33,17 +36,18 @@
                 <tbody>
                     @foreach ($reservaciones as $reservacion)
                         <tr>
-                            <td>{{ $reservacion->id }}</td>
+                            <td>{{ $reservacion->codigo_reservacion }}</td>
                             <td>{{ $reservacion->nombre }}</td>
                             <td>{{ $reservacion->email }}</td>
                             <td>{{ $reservacion->telefono }}</td>
                             <td>{{ \Carbon\Carbon::parse($reservacion->fecha_entrada)->format('d-m-Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($reservacion->fecha_salida)->format('d-m-Y') }}</td>
+                            <td>{{ ucfirst($reservacion->tipo_reservacion) }}</td>
                             <td>${{ number_format($reservacion->monto_total, 2) }}</td>
                             <td>{{ ucfirst($reservacion->metodo_pago) }}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('reservaciones.show', $reservacion->id) }}" class="edit-button">Ver detalles</a>
+                                    <a href="{{ route('reservaciones.edit', $reservacion->id) }}" class="edit-button">Editar</a>
                                     <form action="{{ route('reservaciones.destroy', $reservacion->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')

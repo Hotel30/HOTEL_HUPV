@@ -1,53 +1,46 @@
 @extends('layouts.app')
-@section('head.content')
-    <title>Crear Habitación</title>
-    <link rel="stylesheet" href="{{ asset('/css/anadir.css') }}">
-@endsection
 
 @section('main.content')
 <div class="main-content">
-    <h2>Detalles de la Reservación</h2>
-    
-    <div class="section-container">
-        <h3 class="section-title">Cliente</h3>
-        <p><strong>Nombre:</strong> {{ $reservacion->nombre }}</p>
-        <p><strong>Teléfono:</strong> {{ $reservacion->telefono }}</p>
-        <p><strong>Email:</strong> {{ $reservacion->email }}</p>
-        <p><strong>Dirección:</strong> {{ $reservacion->direccion }}</p>
-    </div>
+    <h1>Detalles de Reservación</h1>
 
-    <div class="section-container">
-        <h3 class="section-title">{{ $reservacion->hotel->nombre }}</h3>
-    </div>
+    <h4>Información General</h4>
+    <ul>
+        <li><strong>Cliente:</strong> {{ $reservacion->cliente->nombre }} {{ $reservacion->cliente->apellidos }}</li>
+        <li><strong>Hotel:</strong> {{ $reservacion->hotel->nombre }}</li>
+        <li><strong>Tipo de Reservación:</strong> {{ ucfirst($reservacion->tipo_reservacion) }}</li>
+        <li><strong>Fecha de Entrada:</strong> {{ $reservacion->fecha_entrada }}</li>
+        <li><strong>Fecha de Salida:</strong> {{ $reservacion->fecha_salida }}</li>
+        <li><strong>Noches:</strong> {{ $reservacion->noches }}</li>
+        <li><strong>Método de Pago:</strong> {{ ucfirst($reservacion->metodo_pago) }}</li>
+    </ul>
 
-    <div class="section-container">
-        <h3 class="section-title">Detalles de la Estancia</h3>
-        <p><strong>Fecha de Entrada:</strong> {{ $reservacion->fecha_entrada }}</p>
-        <p><strong>Fecha de Salida:</strong> {{ $reservacion->fecha_salida }}</p>
-        <p><strong>Noches:</strong> {{ $reservacion->noches }}</p>
-        <p><strong>Código Promocional:</strong> {{ $reservacion->codigo_promocional ?? 'Ninguno' }}</p>
-        <p><strong>Monto Total:</strong> ${{ $reservacion->monto_total }}</p>
-        <p><strong>Descuento aplicado:</strong> ${{ $reservacion->descuento_aplicado ?? 'Sin '}}</p>
-        <p><strong>Notas:</strong> {{ $reservacion->notas ?? 'Sin notas adicionales' }}</p>
-        <p><strong>Método de Pago:</strong> {{ $reservacion->metodo_pago}}</p>
-    </div>
+    <h4>Habitaciones</h4>
+    <ul>
+        @foreach ($reservacion->habitaciones as $habitacion)
+            <li>Habitación {{ $habitacion->numero_habitacion }} - ${{ number_format($habitacion->tarifa, 2) }}</li>
+        @endforeach
+    </ul>
 
-    <div class="section-container">
-        <h3 class="section-title">Habitaciones Reservadas</h3>
-        <ul class="inventory-container">
-            @forelse ($reservacion->habitaciones as $habitacion)
-                <li class="inventory-item">
-                    <label>
-                        <strong>Habitación:</strong> {{ $habitacion->numero_habitacion }} 
-                        ({{ $habitacion->tipo_habitacion_id == 1 ? 'Individual' : ($habitacion->tipo_habitacion_id == 2 ? 'Doble' : ($habitacion->tipo_habitacion_id == 3 ? 'Suite' : ($habitacion->tipo_habitacion_id == 4 ? 'Suite Presidencial' : 'Familiar'))) }}) 
-                        - Tarifa: ${{ $habitacion->pivot->tarifa }}
-                    </label>
-                </li>
-            @empty
-                <li class="inventory-item">No hay habitaciones reservadas para esta reservación.</li>
-            @endforelse
-        </ul>
-    </div>
+    <h4>Artículos Adicionales</h4>
+    <ul>
+        @foreach ($reservacion->inventarios as $articulo)
+            <li>{{ $articulo->nombre_producto }} (x{{ $articulo->pivot->cantidad }}) - ${{ number_format($articulo->pivot->subtotal, 2) }}</li>
+        @endforeach
+    </ul>
+
+    <h4>Promoción</h4>
+    <p>
+        <strong>Código:</strong> {{ $reservacion->codigo_promocional ?? 'N/A' }} <br>
+        <strong>Descuento:</strong> {{ $reservacion->descuento_aplicado }}%
+    </p>
+
+    <h4>Notas</h4>
+    <p>{{ $reservacion->notas }}</p>
+
+    <h4>Monto Total</h4>
+    <p><strong>${{ number_format($reservacion->monto_total, 2) }}</strong></p>
+
+    <a href="{{ route('reservaciones.create') }}" class="btn btn-secondary">Crear otra Reservación</a>
 </div>
-
 @endsection
