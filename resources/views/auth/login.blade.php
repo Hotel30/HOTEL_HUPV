@@ -30,31 +30,38 @@
     </div>
 
     <script>
-    function narrar(texto) {
-        window.speechSynthesis.cancel(); 
-        const narrador = new SpeechSynthesisUtterance(texto);
-        narrador.lang = 'es-ES'; 
+        function narrar(texto) {
+            window.speechSynthesis.cancel(); 
+            const narrador = new SpeechSynthesisUtterance(texto);
+            narrador.lang = 'es-ES'; 
 
-        const vocesDisponibles = window.speechSynthesis.getVoices();
-
-        const vozSeleccionada = vocesDisponibles.find(voz => voz.lang === 'es-ES');
+            const vocesDisponibles = window.speechSynthesis.getVoices();
+            const vozSeleccionada = vocesDisponibles.find(voz => voz.lang === 'es-ES');
         
-        if (vozSeleccionada) {
-            narrador.voice = vozSeleccionada;
-        } else {
-            console.warn('No se encontró una voz en español. Usando la voz predeterminada.');
+            if (vozSeleccionada) {
+                narrador.voice = vozSeleccionada;
+            } else {
+                console.warn('No se encontró una voz en español. Usando la voz predeterminada.');
+            }
+
+            window.speechSynthesis.speak(narrador);
         }
 
-        window.speechSynthesis.speak(narrador);
-    }
-
-    document.querySelectorAll('[aria-label]').forEach(elemento => {
-        elemento.addEventListener('mouseover', () => {
-            const descripcion = elemento.getAttribute('aria-label');
-            narrar(descripcion);
+        document.querySelectorAll('[aria-label]').forEach(elemento => {
+            elemento.addEventListener('mouseover', () => {
+                const descripcion = elemento.getAttribute('aria-label');
+                narrar(descripcion);
+            });
         });
-    });
-</script>
+
+        // Añadir evento para narrar el texto que se ingresa en los campos
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                const textoIngresado = input.value;
+                narrar(textoIngresado);
+            });
+        });
+    </script>
 
 </body>
 </html>
